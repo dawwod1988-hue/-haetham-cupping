@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>هيثم للحجامة – أبو سنان</title>
+</head>
+<body>
+
+<div id="app">
+  <h2 style="text-align:center">هيثم للحجامة</h2>
+  <p style="text-align:center">جاري تشغيل التطبيق…</p>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyClhrm3BtsQhOOUe_Am9z69DkRAEwsweJ4",
+  authDomain: "haetham-80b2a.firebaseapp.com",
+  projectId: "haetham-80b2a",
+  storageBucket: "haetham-80b2a.firebasestorage.app",
+  messagingSenderId: "288982607003",
+  appId: "1:288982607003:web:841f87f604b80b5745d23e"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+document.getElementById("app").innerHTML = `
+  <h1 style="text-align:center">هيثم للحجامة</h1>
+  <p style="text-align:center">تم تشغيل Firebase بنجاح ✅</p>
+`;
+</script>
+
+</body>
+</html>
