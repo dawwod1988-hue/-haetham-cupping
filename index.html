@@ -215,11 +215,6 @@ textarea{
   line-height:1.6;
 }
 
-.booking-success{
-  font-size:45px;
-  margin-bottom:10px;
-}
-
 .booking-error{
   color:#b00020;
   line-height:1.6;
@@ -234,15 +229,9 @@ textarea{
 
 <!-- BOOKING MODAL -->
 
-<div
-  id="bookingModal"
-  class="booking-modal"
->
+<div id="bookingModal" class="booking-modal">
 
-  <div
-    id="bookingModalBox"
-    class="booking-modal-box"
-  >
+  <div class="booking-modal-box">
 
     <div
       id="bookingSpinner"
@@ -317,10 +306,7 @@ textarea{
 
     <h2>بيانات الحجز</h2>
 
-
-    <label>
-      الاسم
-    </label>
+    <label>الاسم</label>
 
     <input
       id="customerName"
@@ -329,9 +315,7 @@ textarea{
     >
 
 
-    <label>
-      رقم الهاتف
-    </label>
+    <label>رقم الهاتف</label>
 
     <input
       id="customerPhone"
@@ -340,9 +324,7 @@ textarea{
     >
 
 
-    <label>
-      ملاحظات
-    </label>
+    <label>ملاحظات</label>
 
     <textarea
       id="customerNotes"
@@ -401,6 +383,13 @@ const db =
   firebase.firestore();
 
 
+/* FIRESTORE CONNECTION TEST */
+
+console.log(
+  "FIRESTORE READY"
+);
+
+
 const auth =
   firebase.auth();
 
@@ -445,6 +434,7 @@ function message(text,type){
     "message show " + (type || "info");
 
 }
+
 
 
 /* MODAL */
@@ -543,8 +533,7 @@ function toEn(value){
   return String(value)
     .replace(/[٠-٩]/g,function(d){
 
-      return "٠١٢٣٤٥٦٧٨٩"
-        .indexOf(d);
+      return "٠١٢٣٤٥٦٧٨٩".indexOf(d);
 
     });
 
@@ -1034,13 +1023,6 @@ async function createBooking(){
       bookingData
     );
 
-
-    /*
-      مهم:
-      إذا لم يستجب Firestore
-      خلال 5 ثوانٍ سنظهر النتيجة
-      بدل أن تبقى النافذة معلقة.
-    */
 
     const testRef =
       await Promise.race([
