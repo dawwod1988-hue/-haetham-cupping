@@ -2,347 +2,244 @@
 <html lang="ar" dir="rtl">
 
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>هيثم للحجامة</title>
-
-  <style>
-
-    *{
-      box-sizing:border-box;
-    }
-
-    body{
-      margin:0;
-      font-family:Arial,sans-serif;
-      background:#f5f7f9;
-      color:#222;
-    }
-
-    .container{
-      max-width:700px;
-      margin:auto;
-      padding:20px;
-    }
-
-    .header{
-      background:#111827;
-      color:white;
-      padding:25px 20px;
-      border-radius:18px;
-      text-align:center;
-      margin-bottom:20px;
-    }
-
-    .header h1{
-      margin:0 0 8px;
-      font-size:28px;
-    }
-
-    .header p{
-      margin:5px 0;
-      opacity:.9;
-    }
-
-    .card{
-      background:white;
-      border-radius:18px;
-      padding:20px;
-      margin-bottom:18px;
-      box-shadow:0 4px 15px rgba(0,0,0,.06);
-    }
-
-    h2{
-      margin-top:0;
-      font-size:21px;
-    }
-
-    label{
-      display:block;
-      margin:15px 0 7px;
-      font-weight:bold;
-    }
-
-    input,
-    textarea{
-      width:100%;
-      padding:13px;
-      border:1px solid #ddd;
-      border-radius:10px;
-      font-size:16px;
-      direction:rtl;
-      background:white;
-    }
-
-    textarea{
-      min-height:90px;
-      resize:vertical;
-    }
-
-    .dates,
-    .times{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:8px;
-    }
-
-    button{
-      font-family:inherit;
-      cursor:pointer;
-    }
-
-    .date-btn,
-    .time-btn{
-      border:1px solid #ddd;
-      background:#fff;
-      padding:12px 6px;
-      border-radius:10px;
-      font-size:14px;
-    }
-
-    .date-btn.selected,
-    .time-btn.selected{
-      background:#111827;
-      color:white;
-      border-color:#111827;
-    }
-
-    .time-btn.full{
-      background:#eee;
-      color:#999;
-      cursor:not-allowed;
-    }
-
-    .btn{
-      width:100%;
-      border:0;
-      border-radius:12px;
-      padding:15px;
-      font-size:17px;
-      font-weight:bold;
-      margin-top:15px;
-    }
-
-    .btn-primary{
-      background:#111827;
-      color:white;
-    }
-
-    .message{
-      padding:13px;
-      border-radius:10px;
-      margin-bottom:15px;
-      display:none;
-      text-align:center;
-      word-break:break-word;
-    }
-
-    .empty{
-      color:#777;
-      text-align:center;
-      padding:15px;
-    }
-
-    .whatsapp{
-      display:block;
-      text-align:center;
-      text-decoration:none;
-      color:#128c7e;
-      font-weight:bold;
-      margin-top:15px;
-    }
-
-    .small{
-      font-size:13px;
-      color:#777;
-    }
-
-
-    /* =========================
-       Booking Modal
-    ========================= */
-
-    .booking-modal{
-
-      position:fixed;
-
-      inset:0;
-
-      background:rgba(0,0,0,.45);
-
-      display:none;
-
-      align-items:center;
-
-      justify-content:center;
-
-      z-index:9999;
-
-      padding:20px;
-
-    }
-
-
-    .booking-modal.show{
-
-      display:flex;
-
-    }
-
-
-    .booking-modal-box{
-
-      background:white;
-
-      width:100%;
-
-      max-width:360px;
-
-      border-radius:20px;
-
-      padding:30px 20px;
-
-      text-align:center;
-
-      box-shadow:
-        0 10px 40px
-        rgba(0,0,0,.2);
-
-    }
-
-
-    .booking-spinner{
-
-      width:45px;
-
-      height:45px;
-
-      border:4px solid #eee;
-
-      border-top-color:#111827;
-
-      border-radius:50%;
-
-      animation:
-        spin 1s linear infinite;
-
-      margin:
-        0 auto 20px;
-
-    }
-
-
-    @keyframes spin{
-
-      to{
-
-        transform:
-          rotate(360deg);
-
-      }
-
-    }
-
-
-    .booking-modal-title{
-
-      font-size:20px;
-
-      font-weight:bold;
-
-      margin-bottom:8px;
-
-    }
-
-
-    .booking-modal-text{
-
-      color:#666;
-
-      font-size:15px;
-
-      line-height:1.6;
-
-      word-break:break-word;
-
-    }
-
-
-    .booking-modal.success
-    .booking-spinner{
-
-      display:none;
-
-    }
-
-
-    .booking-modal.error
-    .booking-spinner{
-
-      display:none;
-
-    }
-
-
-    .booking-modal.success
-    .booking-modal-title{
-
-      color:#137333;
-
-    }
-
-
-    .booking-modal.error
-    .booking-modal-title{
-
-      color:#b3261e;
-
-    }
-
-  </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هيثم للحجامة</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7f9;
+  color:#222;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+
+.header{
+  background:#111827;
+  color:white;
+  padding:25px 20px;
+  border-radius:18px;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.header h1{
+  margin:0 0 8px;
+  font-size:28px;
+}
+
+.header p{
+  margin:5px 0;
+  opacity:.9;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+h2{
+  margin-top:0;
+  font-size:21px;
+}
+
+label{
+  display:block;
+  margin:15px 0 7px;
+  font-weight:bold;
+}
+
+input,
+textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-size:16px;
+  direction:rtl;
+  background:white;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.dates,
+.times{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+
+.date-btn,
+.time-btn{
+  border:1px solid #ddd;
+  background:#fff;
+  padding:12px 6px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.date-btn.selected,
+.time-btn.selected{
+  background:#111827;
+  color:white;
+  border-color:#111827;
+}
+
+.time-btn.full{
+  background:#eee;
+  color:#999;
+  cursor:not-allowed;
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:15px;
+  font-size:17px;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.btn-primary{
+  background:#111827;
+  color:white;
+}
+
+.message{
+  padding:13px;
+  border-radius:10px;
+  margin-bottom:15px;
+  display:none;
+  text-align:center;
+  word-break:break-word;
+}
+
+.empty{
+  color:#777;
+  text-align:center;
+  padding:15px;
+}
+
+.whatsapp{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  color:#128c7e;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.small{
+  font-size:13px;
+  color:#777;
+}
+
+/* Booking Modal */
+
+.booking-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.booking-modal.show{
+  display:flex;
+}
+
+.booking-modal-box{
+  background:white;
+  width:100%;
+  max-width:360px;
+  border-radius:20px;
+  padding:30px 20px;
+  text-align:center;
+  box-shadow:0 10px 40px rgba(0,0,0,.2);
+}
+
+.booking-spinner{
+  width:45px;
+  height:45px;
+  border:4px solid #eee;
+  border-top-color:#111827;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:0 auto 20px;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.booking-modal-title{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.booking-modal-text{
+  color:#666;
+  font-size:15px;
+  line-height:1.6;
+  word-break:break-word;
+}
+
+.booking-modal.success .booking-spinner,
+.booking-modal.error .booking-spinner{
+  display:none;
+}
+
+.booking-modal.success .booking-modal-title{
+  color:#137333;
+}
+
+.booking-modal.error .booking-modal-title{
+  color:#b3261e;
+}
+</style>
 </head>
-
 
 <body>
 
+<!-- Booking Modal -->
 
-<!-- =========================
-     Booking Modal
-========================= -->
+<div id="bookingModal" class="booking-modal">
 
-<div
-  id="bookingModal"
-  class="booking-modal"
->
+  <div class="booking-modal-box">
 
-  <div
-    class="booking-modal-box"
-  >
+    <div id="bookingSpinner" class="booking-spinner"></div>
 
-    <div
-      id="bookingSpinner"
-      class="booking-spinner"
-    ></div>
-
-
-    <div
-      id="bookingModalTitle"
-      class="booking-modal-title"
-    >
+    <div id="bookingModalTitle" class="booking-modal-title">
       جاري إرسال الحجز...
     </div>
 
-
-    <div
-      id="bookingModalText"
-      class="booking-modal-text"
-    >
+    <div id="bookingModalText" class="booking-modal-text">
       يرجى الانتظار...
     </div>
 
@@ -351,9 +248,7 @@
 </div>
 
 
-
 <div class="container">
-
 
   <div class="header">
 
@@ -368,10 +263,7 @@
   </div>
 
 
-  <div
-    id="message"
-    class="message"
-  ></div>
+  <div id="message" class="message"></div>
 
 
   <div class="card">
@@ -380,25 +272,17 @@
       حجز موعد
     </h2>
 
-
     <label>
       اختر التاريخ
     </label>
 
-    <div
-      id="dates"
-      class="dates"
-    ></div>
-
+    <div id="dates" class="dates"></div>
 
     <label>
       اختر الوقت
     </label>
 
-    <div
-      id="times"
-      class="times"
-    >
+    <div id="times" class="times">
 
       <div class="empty">
         اختر التاريخ أولاً
@@ -414,7 +298,6 @@
     <h2>
       بيانات الحجز
     </h2>
-
 
     <label for="customerName">
       الاسم
@@ -478,14 +361,10 @@
     سيتم تأكيد الموعد بعد مراجعة طلب الحجز.
   </p>
 
-
 </div>
 
 
-
-<!-- =========================
-     Firebase
-========================= -->
+<!-- Firebase -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
@@ -496,10 +375,7 @@
 
 <script>
 
-
-/* =========================
-   Firebase Configuration
-========================= */
+/* Firebase Configuration */
 
 const firebaseConfig = {
 
@@ -527,37 +403,18 @@ const firebaseConfig = {
 };
 
 
-firebase.initializeApp(
-  firebaseConfig
-);
+firebase.initializeApp(firebaseConfig);
 
 
 const db =
   firebase.firestore();
 
 
-/*
-   تحسين اتصال Firestore
-   مع iPhone / Safari
-*/
-
-db.settings({
-
-  experimentalForceLongPolling:true,
-
-  useFetchStreams:false
-
-});
-
-
 const auth =
   firebase.auth();
 
 
-
-/* =========================
-   App State
-========================= */
+/* App State */
 
 const S = {
 
@@ -601,22 +458,15 @@ const S = {
 };
 
 
-
-/* =========================
-   Messages
-========================= */
+/* Messages */
 
 function message(text,type){
 
   const el =
-    document.getElementById(
-      "message"
-    );
+    document.getElementById("message");
 
   if(!el){
-
     return;
-
   }
 
   el.className =
@@ -628,36 +478,24 @@ function message(text,type){
 }
 
 
-
-/* =========================
-   Booking Modal
-========================= */
+/* Booking Modal */
 
 function showBookingModal(){
 
   const modal =
-    document.getElementById(
-      "bookingModal"
-    );
+    document.getElementById("bookingModal");
 
   const title =
-    document.getElementById(
-      "bookingModalTitle"
-    );
+    document.getElementById("bookingModalTitle");
 
   const text =
-    document.getElementById(
-      "bookingModalText"
-    );
-
+    document.getElementById("bookingModalText");
 
   modal.className =
     "booking-modal show";
 
-
   title.textContent =
     "جاري إرسال الحجز...";
-
 
   text.textContent =
     "يرجى الانتظار...";
@@ -668,10 +506,7 @@ function showBookingModal(){
 function hideBookingModal(){
 
   const modal =
-    document.getElementById(
-      "bookingModal"
-    );
-
+    document.getElementById("bookingModal");
 
   modal.className =
     "booking-modal";
@@ -682,28 +517,19 @@ function hideBookingModal(){
 function bookingSuccess(){
 
   const modal =
-    document.getElementById(
-      "bookingModal"
-    );
+    document.getElementById("bookingModal");
 
   const title =
-    document.getElementById(
-      "bookingModalTitle"
-    );
+    document.getElementById("bookingModalTitle");
 
   const text =
-    document.getElementById(
-      "bookingModalText"
-    );
-
+    document.getElementById("bookingModalText");
 
   modal.className =
     "booking-modal show success";
 
-
   title.textContent =
     "تم إرسال الحجز بنجاح ✅";
-
 
   text.textContent =
     "سيتم تأكيد الموعد بعد مراجعة طلب الحجز.";
@@ -714,28 +540,19 @@ function bookingSuccess(){
 function bookingError(errorText){
 
   const modal =
-    document.getElementById(
-      "bookingModal"
-    );
+    document.getElementById("bookingModal");
 
   const title =
-    document.getElementById(
-      "bookingModalTitle"
-    );
+    document.getElementById("bookingModalTitle");
 
   const text =
-    document.getElementById(
-      "bookingModalText"
-    );
-
+    document.getElementById("bookingModalText");
 
   modal.className =
     "booking-modal show error";
 
-
   title.textContent =
     "تعذر إرسال الحجز";
-
 
   text.textContent =
     errorText;
@@ -743,115 +560,72 @@ function bookingError(errorText){
 }
 
 
-
-/* =========================
-   Convert Arabic Numbers
-========================= */
+/* Convert Arabic Numbers */
 
 function toEn(value){
 
   if(!value){
-
     return "";
-
   }
-
 
   return value
 
     .replace(
       /[٠-٩]/g,
       function(d){
-
         return "٠١٢٣٤٥٦٧٨٩".indexOf(d);
-
       }
     )
 
     .replace(
       /[۰-۹]/g,
       function(d){
-
         return "۰۱۲۳۴۵۶۷۸۹".indexOf(d);
-
       }
     );
 
 }
 
 
-
-/* =========================
-   WhatsApp Number
-========================= */
+/* WhatsApp Number */
 
 function waNum(p){
 
   let d =
     toEn(p).replace(/\D/g,'');
 
-
-  if(
-    d.startsWith("00")
-  ){
-
-    d =
-      d.slice(2);
-
+  if(d.startsWith("00")){
+    d = d.slice(2);
   }
 
-
-  if(
-    /^0\d{8,9}$/.test(d)
-  ){
-
-    d =
-      "972" + d.slice(1);
-
+  if(/^0\d{8,9}$/.test(d)){
+    d = "972" + d.slice(1);
   }
 
-
-  if(
-    /^9720\d{8,9}$/.test(d)
-  ){
-
-    d =
-      "972" + d.slice(4);
-
+  if(/^9720\d{8,9}$/.test(d)){
+    d = "972" + d.slice(4);
   }
-
 
   return d;
 
 }
 
 
-
-/* =========================
-   Today's Date
-========================= */
+/* Today's Date */
 
 function todayString(){
 
   const d =
     new Date();
 
-
   const y =
     d.getFullYear();
 
-
   const m =
-    String(
-      d.getMonth()+1
-    ).padStart(2,"0");
-
+    String(d.getMonth()+1).padStart(2,"0");
 
   const day =
-    String(
-      d.getDate()
-    ).padStart(2,"0");
-
+    String(d.getDate()).padStart(2,"0");
 
   return (
     y + "-" +
@@ -862,15 +636,9 @@ function todayString(){
 }
 
 
+/* Add Days */
 
-/* =========================
-   Add Days
-========================= */
-
-function addDays(
-  dateString,
-  days
-){
+function addDays(dateString,days){
 
   const d =
     new Date(
@@ -878,27 +646,18 @@ function addDays(
       "T00:00:00"
     );
 
-
   d.setDate(
     d.getDate() + days
   );
 
-
   const y =
     d.getFullYear();
 
-
   const m =
-    String(
-      d.getMonth()+1
-    ).padStart(2,"0");
-
+    String(d.getMonth()+1).padStart(2,"0");
 
   const day =
-    String(
-      d.getDate()
-    ).padStart(2,"0");
-
+    String(d.getDate()).padStart(2,"0");
 
   return (
     y + "-" +
@@ -909,10 +668,7 @@ function addDays(
 }
 
 
-
-/* =========================
-   Day Name
-========================= */
+/* Day Name */
 
 function dayName(dateString){
 
@@ -921,7 +677,6 @@ function dayName(dateString){
       dateString +
       "T00:00:00"
     );
-
 
   const names = [
 
@@ -935,24 +690,17 @@ function dayName(dateString){
 
   ];
 
-
-  return names[
-    d.getDay()
-  ];
+  return names[d.getDay()];
 
 }
 
 
-
-/* =========================
-   Short Date
-========================= */
+/* Short Date */
 
 function shortDate(dateString){
 
   const parts =
     dateString.split("-");
-
 
   return (
     parts[2] +
@@ -963,10 +711,7 @@ function shortDate(dateString){
 }
 
 
-
-/* =========================
-   Day Off
-========================= */
+/* Day Off */
 
 function isDayOff(date){
 
@@ -978,28 +723,19 @@ function isDayOff(date){
 
     &&
 
-    S.settings.daysOff.includes(
-      date
-    )
+    S.settings.daysOff.includes(date)
 
   );
 
 }
 
 
+/* Taken Slots */
 
-/* =========================
-   Taken Slots
-========================= */
-
-function taken(
-  date,
-  time
-){
+function taken(date,time){
 
   const key =
     date + "_" + time;
-
 
   if(
     S.availability &&
@@ -1014,28 +750,18 @@ function taken(
 
   }
 
-
   return 0;
 
 }
 
 
+/* Full Slot */
 
-/* =========================
-   Full Slot
-========================= */
-
-function full(
-  date,
-  time
-){
+function full(date,time){
 
   return (
 
-    taken(
-      date,
-      time
-    )
+    taken(date,time)
 
     >=
 
@@ -1048,72 +774,48 @@ function full(
 }
 
 
-
-/* =========================
-   Create Time Slots
-========================= */
+/* Create Time Slots */
 
 function makeTimes(){
 
   const result = [];
 
-
   const start =
     S.settings.start ||
     "10:00";
 
-
   const end =
     S.settings.end ||
     "22:00";
-
 
   const slot =
     Number(
       S.settings.slot || 60
     );
 
-
   let [sh,sm] =
-    start
-      .split(":")
-      .map(Number);
-
+    start.split(":").map(Number);
 
   let [eh,em] =
-    end
-      .split(":")
-      .map(Number);
-
+    end.split(":").map(Number);
 
   let current =
     sh * 60 + sm;
 
-
   const finish =
     eh * 60 + em;
 
-
-  while(
-    current < finish
-  ){
+  while(current < finish){
 
     const h =
-      Math.floor(
-        current / 60
-      );
-
+      Math.floor(current / 60);
 
     const m =
       current % 60;
 
-
     result.push(
 
-      String(h).padStart(
-        2,
-        "0"
-      )
+      String(h).padStart(2,"0")
 
       +
 
@@ -1121,51 +823,34 @@ function makeTimes(){
 
       +
 
-      String(m).padStart(
-        2,
-        "0"
-      )
+      String(m).padStart(2,"0")
 
     );
-
 
     current += slot;
 
   }
-
 
   return result;
 
 }
 
 
-
-/* =========================
-   Render Dates
-========================= */
+/* Render Dates */
 
 function renderDates(){
 
   const el =
-    document.getElementById(
-      "dates"
-    );
-
+    document.getElementById("dates");
 
   if(!el){
-
     return;
-
   }
 
-
-  el.innerHTML =
-    "";
-
+  el.innerHTML = "";
 
   const start =
     todayString();
-
 
   for(
     let i=0;
@@ -1174,79 +859,52 @@ function renderDates(){
   ){
 
     const date =
-      addDays(
-        start,
-        i
-      );
-
+      addDays(start,i);
 
     const button =
-      document.createElement(
-        "button"
-      );
-
+      document.createElement("button");
 
     button.type =
       "button";
 
-
     button.className =
       "date-btn";
-
 
     if(
       S.selectedDate === date
     ){
 
-      button.classList.add(
-        "selected"
-      );
+      button.classList.add("selected");
 
     }
 
-
     button.innerHTML =
-
       "<strong>" +
-
       dayName(date) +
-
       "</strong><br>" +
-
       shortDate(date);
-
 
     button.onclick =
       function(){
-
         selectDate(date);
-
       };
 
-
-    el.appendChild(
-      button
-    );
+    el.appendChild(button);
 
   }
 
 }
 
 
-
-/* =========================
-   Select Date
-========================= */
+/* Select Date */
 
 function selectDate(date){
 
   S.selectedDate =
     date;
 
-
   S.selectedTime =
     "";
-
 
   renderDates();
 
@@ -1255,29 +913,18 @@ function selectDate(date){
 }
 
 
-
-/* =========================
-   Render Times
-========================= */
+/* Render Times */
 
 function renderTimes(){
 
   const el =
-    document.getElementById(
-      "times"
-    );
-
+    document.getElementById("times");
 
   if(!el){
-
     return;
-
   }
 
-
-  el.innerHTML =
-    "";
-
+  el.innerHTML = "";
 
   if(!S.selectedDate){
 
@@ -1288,11 +935,8 @@ function renderTimes(){
 
   }
 
-
   if(
-    isDayOff(
-      S.selectedDate
-    )
+    isDayOff(S.selectedDate)
   ){
 
     el.innerHTML =
@@ -1302,14 +946,10 @@ function renderTimes(){
 
   }
 
-
   const times =
     makeTimes();
 
-
-  if(
-    times.length === 0
-  ){
+  if(times.length === 0){
 
     el.innerHTML =
       '<div class="empty">لا توجد أوقات متاحة</div>';
@@ -1318,23 +958,17 @@ function renderTimes(){
 
   }
 
-
   times.forEach(
     function(time){
 
       const button =
-        document.createElement(
-          "button"
-        );
-
+        document.createElement("button");
 
       button.type =
         "button";
 
-
       button.className =
         "time-btn";
-
 
       const isFull =
         full(
@@ -1342,21 +976,15 @@ function renderTimes(){
           time
         );
 
-
       if(isFull){
 
-        button.classList.add(
-          "full"
-        );
-
+        button.classList.add("full");
 
         button.disabled =
           true;
 
-
         button.textContent =
-          time +
-          " ممتلئ";
+          time + " ممتلئ";
 
       }
 
@@ -1365,31 +993,22 @@ function renderTimes(){
         button.textContent =
           time;
 
-
         if(
           S.selectedTime === time
         ){
 
-          button.classList.add(
-            "selected"
-          );
+          button.classList.add("selected");
 
         }
 
-
         button.onclick =
           function(){
-
             selectTime(time);
-
           };
 
       }
 
-
-      el.appendChild(
-        button
-      );
+      el.appendChild(button);
 
     }
   );
@@ -1397,40 +1016,27 @@ function renderTimes(){
 }
 
 
-
-/* =========================
-   Select Time
-========================= */
+/* Select Time */
 
 function selectTime(time){
 
   S.selectedTime =
     time;
 
-
   renderTimes();
 
 }
 
 
-
-/* =========================
-   Render Home
-========================= */
+/* Render Home */
 
 function renderHome(){
 
   const name =
-    document.getElementById(
-      "centerName"
-    );
-
+    document.getElementById("centerName");
 
   const area =
-    document.getElementById(
-      "centerArea"
-    );
-
+    document.getElementById("centerArea");
 
   if(name){
 
@@ -1440,7 +1046,6 @@ function renderHome(){
 
   }
 
-
   if(area){
 
     area.textContent =
@@ -1449,18 +1054,13 @@ function renderHome(){
 
   }
 
-
   const wa =
     waNum(
       S.settings.whatsapp
     );
 
-
   const link =
-    document.getElementById(
-      "whatsappLink"
-    );
-
+    document.getElementById("whatsappLink");
 
   if(link){
 
@@ -1481,7 +1081,6 @@ function renderHome(){
 
   }
 
-
   renderDates();
 
   renderTimes();
@@ -1489,29 +1088,18 @@ function renderHome(){
 }
 
 
-
-/* ==================================================
-   CREATE BOOKING
-================================================== */
+/* CREATE BOOKING */
 
 async function createBooking(){
 
   const nameEl =
-    document.getElementById(
-      "customerName"
-    );
-
+    document.getElementById("customerName");
 
   const phoneEl =
-    document.getElementById(
-      "customerPhone"
-    );
-
+    document.getElementById("customerPhone");
 
   const notesEl =
-    document.getElementById(
-      "customerNotes"
-    );
+    document.getElementById("customerNotes");
 
 
   if(
@@ -1531,10 +1119,8 @@ async function createBooking(){
   const name =
     nameEl.value.trim();
 
-
   const phone =
     phoneEl.value.trim();
-
 
   const notes =
     notesEl
@@ -1553,9 +1139,7 @@ async function createBooking(){
   }
 
 
-  if(
-    name.length < 2
-  ){
+  if(name.length < 2){
 
     bookingError(
       "الاسم قصير جدًا"
@@ -1577,9 +1161,7 @@ async function createBooking(){
   }
 
 
-  if(
-    phone.length < 6
-  ){
+  if(phone.length < 6){
 
     bookingError(
       "يرجى إدخال رقم هاتف صحيح"
@@ -1590,9 +1172,7 @@ async function createBooking(){
   }
 
 
-  if(
-    !S.selectedDate
-  ){
+  if(!S.selectedDate){
 
     bookingError(
       "يرجى اختيار التاريخ"
@@ -1603,9 +1183,7 @@ async function createBooking(){
   }
 
 
-  if(
-    !S.selectedTime
-  ){
+  if(!S.selectedTime){
 
     bookingError(
       "يرجى اختيار الوقت"
@@ -1617,9 +1195,7 @@ async function createBooking(){
 
 
   if(
-    isDayOff(
-      S.selectedDate
-    )
+    isDayOff(S.selectedDate)
   ){
 
     bookingError(
@@ -1684,15 +1260,17 @@ async function createBooking(){
     );
 
 
-    const testRef = await db
-  .collection("bookings")
-  .add(bookingData);
-
-console.log("BOOKING SAVED:", testRef.id);
+    const testRef =
+      await db
+        .collection("bookings")
+        .add(
+          bookingData
+        );
 
 
     console.log(
-      "BOOKING SAVED"
+      "BOOKING SAVED:",
+      testRef.id
     );
 
 
@@ -1743,10 +1321,7 @@ console.log("BOOKING SAVED:", testRef.id);
 }
 
 
-
-/* =========================
-   Firebase Settings
-========================= */
+/* Firebase Settings */
 
 db
   .collection("settings")
@@ -1755,13 +1330,10 @@ db
 
     function(doc){
 
-      if(
-        doc.exists
-      ){
+      if(doc.exists){
 
         const data =
           doc.data();
-
 
         S.settings = {
 
@@ -1774,16 +1346,13 @@ db
       }
 
 
-      if(
-        !S.selectedTime
-      ){
+      if(!S.selectedTime){
 
         renderHome();
 
       }
 
     },
-
 
     function(error){
 
@@ -1797,10 +1366,7 @@ db
   );
 
 
-
-/* =========================
-   Firebase Availability
-========================= */
+/* Firebase Availability */
 
 db
   .collection("settings")
@@ -1809,9 +1375,7 @@ db
 
     function(doc){
 
-      if(
-        doc.exists
-      ){
+      if(doc.exists){
 
         S.availability =
           doc.data() || {};
@@ -1837,7 +1401,6 @@ db
 
     },
 
-
     function(error){
 
       console.error(
@@ -1850,13 +1413,9 @@ db
   );
 
 
-
-/* =========================
-   Start App
-========================= */
+/* Start App */
 
 renderHome();
-
 
 </script>
 
