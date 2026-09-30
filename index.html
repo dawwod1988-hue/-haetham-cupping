@@ -1,113 +1,72 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>هيثم للحجامة</title>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#f5f7f9;
+  background:#f5f7f8;
   color:#222;
 }
 
 .container{
-  max-width:700px;
+  max-width:600px;
   margin:auto;
   padding:20px;
-}
-
-.header{
-  background:#111827;
-  color:white;
-  padding:25px 20px;
-  border-radius:18px;
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.header h1{
-  margin:0 0 8px;
-  font-size:28px;
-}
-
-.header p{
-  margin:5px 0;
-  opacity:.9;
 }
 
 .card{
   background:white;
   border-radius:18px;
   padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 4px 15px rgba(0,0,0,.06);
+  margin-bottom:15px;
+  box-shadow:0 3px 15px rgba(0,0,0,.07);
 }
 
-h2{
-  margin-top:0;
-  font-size:21px;
+h1{
+  margin:0 0 5px;
+  font-size:28px;
+}
+
+.subtitle{
+  color:#777;
+  margin-bottom:20px;
 }
 
 label{
   display:block;
-  margin:15px 0 7px;
+  margin:12px 0 6px;
   font-weight:bold;
 }
 
 input,
-textarea{
+textarea,
+select{
   width:100%;
   padding:13px;
   border:1px solid #ddd;
   border-radius:10px;
   font-size:16px;
-  direction:rtl;
   background:white;
 }
 
 textarea{
   min-height:90px;
   resize:vertical;
-}
-
-.dates,
-.times{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-button{
-  font-family:inherit;
-  cursor:pointer;
-}
-
-.date-btn,
-.time-btn{
-  border:1px solid #ddd;
-  background:#fff;
-  padding:12px 6px;
-  border-radius:10px;
-  font-size:14px;
-}
-
-.date-btn.selected,
-.time-btn.selected{
-  background:#111827;
-  color:white;
-  border-color:#111827;
-}
-
-.time-btn.full{
-  background:#eee;
-  color:#999;
-  cursor:not-allowed;
 }
 
 .btn{
@@ -117,49 +76,98 @@ button{
   padding:15px;
   font-size:17px;
   font-weight:bold;
+  cursor:pointer;
   margin-top:15px;
 }
 
 .btn-primary{
-  background:#111827;
+  background:#111;
   color:white;
 }
 
+.btn-primary:active{
+  transform:scale(.98);
+}
+
+.dates{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:5px;
+}
+
+.date-btn{
+  min-width:72px;
+  border:1px solid #ddd;
+  background:white;
+  border-radius:12px;
+  padding:10px 5px;
+  cursor:pointer;
+}
+
+.date-btn.active{
+  background:#111;
+  color:white;
+}
+
+.times{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.time-btn{
+  padding:12px 5px;
+  border:1px solid #ddd;
+  background:white;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.time-btn.active{
+  background:#111;
+  color:white;
+}
+
+.time-btn.full{
+  background:#eee;
+  color:#999;
+  cursor:not-allowed;
+}
+
 .message{
-  padding:13px;
+  padding:12px;
   border-radius:10px;
   margin-bottom:15px;
   display:none;
-  text-align:center;
-  word-break:break-word;
 }
 
-.empty{
-  color:#777;
-  text-align:center;
-  padding:15px;
-}
-
-.whatsapp{
+.message.show{
   display:block;
-  text-align:center;
-  text-decoration:none;
-  color:#128c7e;
-  font-weight:bold;
-  margin-top:15px;
 }
 
-.small{
-  font-size:13px;
-  color:#777;
+.message.error{
+  background:#ffe5e5;
+  color:#a00000;
 }
 
-/* Booking Modal */
+.message.success{
+  background:#e4f8e8;
+  color:#08752c;
+}
+
+.message.info{
+  background:#e9f1ff;
+  color:#174ea6;
+}
+
+
+/* BOOKING MODAL */
 
 .booking-modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.45);
+  background:rgba(0,0,0,.55);
   display:none;
   align-items:center;
   justify-content:center;
@@ -174,21 +182,20 @@ button{
 .booking-modal-box{
   background:white;
   width:100%;
-  max-width:360px;
+  max-width:380px;
   border-radius:20px;
   padding:30px 20px;
   text-align:center;
-  box-shadow:0 10px 40px rgba(0,0,0,.2);
 }
 
 .booking-spinner{
   width:45px;
   height:45px;
-  border:4px solid #eee;
-  border-top-color:#111827;
+  border:4px solid #ddd;
+  border-top-color:#111;
   border-radius:50%;
-  animation:spin 1s linear infinite;
   margin:0 auto 20px;
+  animation:spin 1s linear infinite;
 }
 
 @keyframes spin{
@@ -200,47 +207,60 @@ button{
 .booking-modal-title{
   font-size:20px;
   font-weight:bold;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .booking-modal-text{
-  color:#666;
-  font-size:15px;
+  color:#777;
   line-height:1.6;
-  word-break:break-word;
 }
 
-.booking-modal.success .booking-spinner,
-.booking-modal.error .booking-spinner{
-  display:none;
+.booking-success{
+  font-size:45px;
+  margin-bottom:10px;
 }
 
-.booking-modal.success .booking-modal-title{
-  color:#137333;
+.booking-error{
+  color:#b00020;
+  line-height:1.6;
 }
 
-.booking-modal.error .booking-modal-title{
-  color:#b3261e;
-}
 </style>
 </head>
 
+
 <body>
 
-<!-- Booking Modal -->
 
-<div id="bookingModal" class="booking-modal">
+<!-- BOOKING MODAL -->
 
-  <div class="booking-modal-box">
+<div
+  id="bookingModal"
+  class="booking-modal"
+>
 
-    <div id="bookingSpinner" class="booking-spinner"></div>
+  <div
+    id="bookingModalBox"
+    class="booking-modal-box"
+  >
 
-    <div id="bookingModalTitle" class="booking-modal-title">
+    <div
+      id="bookingSpinner"
+      class="booking-spinner"
+    ></div>
+
+    <div
+      id="bookingModalTitle"
+      class="booking-modal-title"
+    >
       جاري إرسال الحجز...
     </div>
 
-    <div id="bookingModalText" class="booking-modal-text">
-      يرجى الانتظار...
+    <div
+      id="bookingModalText"
+      class="booking-modal-text"
+    >
+      يرجى الانتظار
     </div>
 
   </div>
@@ -250,44 +270,20 @@ button{
 
 <div class="container">
 
-  <div class="header">
-
-    <h1 id="centerName">
-      هيثم للحجامة
-    </h1>
-
-    <p id="centerArea">
-      أبو سنان
-    </p>
-
-  </div>
-
-
   <div id="message" class="message"></div>
 
 
   <div class="card">
 
-    <h2>
-      حجز موعد
-    </h2>
+    <h1 id="centerName">
+      هيثم للحجامة
+    </h1>
 
-    <label>
-      اختر التاريخ
-    </label>
-
-    <div id="dates" class="dates"></div>
-
-    <label>
-      اختر الوقت
-    </label>
-
-    <div id="times" class="times">
-
-      <div class="empty">
-        اختر التاريخ أولاً
-      </div>
-
+    <div
+      id="centerArea"
+      class="subtitle"
+    >
+      أبو سنان
     </div>
 
   </div>
@@ -295,23 +291,45 @@ button{
 
   <div class="card">
 
-    <h2>
-      بيانات الحجز
-    </h2>
+    <h2>اختر التاريخ</h2>
 
-    <label for="customerName">
+    <div
+      id="dates"
+      class="dates"
+    ></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>اختر الوقت</h2>
+
+    <div
+      id="times"
+      class="times"
+    ></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>بيانات الحجز</h2>
+
+
+    <label>
       الاسم
     </label>
 
     <input
       id="customerName"
       type="text"
-      placeholder="اكتب اسمك"
-      autocomplete="name"
+      placeholder="اكتب الاسم"
     >
 
 
-    <label for="customerPhone">
+    <label>
       رقم الهاتف
     </label>
 
@@ -319,63 +337,36 @@ button{
       id="customerPhone"
       type="tel"
       placeholder="05XXXXXXXX"
-      autocomplete="tel"
     >
 
 
-    <label for="customerNotes">
+    <label>
       ملاحظات
     </label>
 
     <textarea
       id="customerNotes"
-      placeholder="أي ملاحظات إضافية..."
+      placeholder="ملاحظات إضافية"
     ></textarea>
 
 
     <button
       class="btn btn-primary"
-      onclick="createBooking()"
       type="button"
+      onclick="createBooking()"
     >
       إرسال طلب الحجز
     </button>
 
   </div>
 
-
-  <a
-    id="whatsappLink"
-    class="whatsapp"
-    href="#"
-    target="_blank"
-  >
-    التواصل عبر واتساب
-  </a>
-
-
-  <p
-    class="small"
-    style="text-align:center;margin-top:20px;"
-  >
-    سيتم تأكيد الموعد بعد مراجعة طلب الحجز.
-  </p>
-
 </div>
-
-
-<!-- Firebase -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
 <script>
 
-/* Firebase Configuration */
+
+/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -414,76 +405,57 @@ const auth =
   firebase.auth();
 
 
-/* App State */
+
+/* APP STATE */
 
 const S = {
 
-  settings: {
+  selectedDate:"",
+  selectedTime:"",
 
-    name:
-      "هيثم للحجامة",
-
-    area:
-      "أبو سنان",
-
-    whatsapp:
-      "",
-
-    start:
-      "10:00",
-
-    end:
-      "22:00",
-
-    slot:
-      60,
-
-    capacity:
-      2,
-
-    daysOff:
-      []
-
+  settings:{
+    name:"هيثم للحجامة",
+    area:"أبو سنان",
+    whatsapp:"",
+    start:"10:00",
+    end:"22:00",
+    slot:60,
+    capacity:2,
+    daysOff:[]
   },
 
-  availability:
-    {},
-
-  selectedDate:
-    "",
-
-  selectedTime:
-    ""
+  availability:{}
 
 };
 
 
-/* Messages */
+
+/* MESSAGE */
 
 function message(text,type){
 
   const el =
     document.getElementById("message");
 
-  if(!el){
-    return;
-  }
+  if(!el) return;
+
+  el.textContent = text;
 
   el.className =
-    "message " + type;
-
-  el.textContent =
-    text;
+    "message show " + (type || "info");
 
 }
 
 
-/* Booking Modal */
+/* MODAL */
 
 function showBookingModal(){
 
   const modal =
     document.getElementById("bookingModal");
+
+  const spinner =
+    document.getElementById("bookingSpinner");
 
   const title =
     document.getElementById("bookingModalTitle");
@@ -491,14 +463,16 @@ function showBookingModal(){
   const text =
     document.getElementById("bookingModalText");
 
-  modal.className =
-    "booking-modal show";
+  spinner.style.display =
+    "block";
 
   title.textContent =
     "جاري إرسال الحجز...";
 
   text.textContent =
-    "يرجى الانتظار...";
+    "يرجى الانتظار";
+
+  modal.classList.add("show");
 
 }
 
@@ -508,16 +482,15 @@ function hideBookingModal(){
   const modal =
     document.getElementById("bookingModal");
 
-  modal.className =
-    "booking-modal";
+  modal.classList.remove("show");
 
 }
 
 
 function bookingSuccess(){
 
-  const modal =
-    document.getElementById("bookingModal");
+  const spinner =
+    document.getElementById("bookingSpinner");
 
   const title =
     document.getElementById("bookingModalTitle");
@@ -525,22 +498,22 @@ function bookingSuccess(){
   const text =
     document.getElementById("bookingModalText");
 
-  modal.className =
-    "booking-modal show success";
+  spinner.style.display =
+    "none";
 
   title.textContent =
-    "تم إرسال الحجز بنجاح ✅";
+    "تم إرسال طلب الحجز";
 
   text.textContent =
-    "سيتم تأكيد الموعد بعد مراجعة طلب الحجز.";
+    "سنقوم بتأكيد الموعد قريبًا.";
 
 }
 
 
 function bookingError(errorText){
 
-  const modal =
-    document.getElementById("bookingModal");
+  const spinner =
+    document.getElementById("bookingSpinner");
 
   const title =
     document.getElementById("bookingModalTitle");
@@ -548,62 +521,64 @@ function bookingError(errorText){
   const text =
     document.getElementById("bookingModalText");
 
-  modal.className =
-    "booking-modal show error";
+  spinner.style.display =
+    "none";
 
   title.textContent =
-    "تعذر إرسال الحجز";
+    "حدث خطأ";
 
-  text.textContent =
-    errorText;
+  text.innerHTML =
+    '<div class="booking-error">' +
+    errorText +
+    '</div>';
 
 }
 
 
-/* Convert Arabic Numbers */
+
+/* ENGLISH NUMBERS */
 
 function toEn(value){
 
-  if(!value){
-    return "";
-  }
+  return String(value)
+    .replace(/[٠-٩]/g,function(d){
 
-  return value
+      return "٠١٢٣٤٥٦٧٨٩"
+        .indexOf(d);
 
-    .replace(
-      /[٠-٩]/g,
-      function(d){
-        return "٠١٢٣٤٥٦٧٨٩".indexOf(d);
-      }
-    )
-
-    .replace(
-      /[۰-۹]/g,
-      function(d){
-        return "۰۱۲۳۴۵۶۷۸۹".indexOf(d);
-      }
-    );
+    });
 
 }
 
 
-/* WhatsApp Number */
+
+/* ISRAEL WHATSAPP */
 
 function waNum(p){
 
   let d =
-    toEn(p).replace(/\D/g,'');
+    toEn(p)
+    .replace(/\D/g,'');
 
   if(d.startsWith("00")){
-    d = d.slice(2);
+
+    d =
+      d.slice(2);
+
   }
 
   if(/^0\d{8,9}$/.test(d)){
-    d = "972" + d.slice(1);
+
+    d =
+      "972" + d.slice(1);
+
   }
 
   if(/^9720\d{8,9}$/.test(d)){
-    d = "972" + d.slice(4);
+
+    d =
+      "972" + d.slice(4);
+
   }
 
   return d;
@@ -611,424 +586,70 @@ function waNum(p){
 }
 
 
-/* Today's Date */
 
-function todayString(){
-
-  const d =
-    new Date();
-
-  const y =
-    d.getFullYear();
-
-  const m =
-    String(d.getMonth()+1).padStart(2,"0");
-
-  const day =
-    String(d.getDate()).padStart(2,"0");
-
-  return (
-    y + "-" +
-    m + "-" +
-    day
-  );
-
-}
-
-
-/* Add Days */
-
-function addDays(dateString,days){
-
-  const d =
-    new Date(
-      dateString +
-      "T00:00:00"
-    );
-
-  d.setDate(
-    d.getDate() + days
-  );
-
-  const y =
-    d.getFullYear();
-
-  const m =
-    String(d.getMonth()+1).padStart(2,"0");
-
-  const day =
-    String(d.getDate()).padStart(2,"0");
-
-  return (
-    y + "-" +
-    m + "-" +
-    day
-  );
-
-}
-
-
-/* Day Name */
-
-function dayName(dateString){
-
-  const d =
-    new Date(
-      dateString +
-      "T00:00:00"
-    );
-
-  const names = [
-
-    "الأحد",
-    "الإثنين",
-    "الثلاثاء",
-    "الأربعاء",
-    "الخميس",
-    "الجمعة",
-    "السبت"
-
-  ];
-
-  return names[d.getDay()];
-
-}
-
-
-/* Short Date */
-
-function shortDate(dateString){
-
-  const parts =
-    dateString.split("-");
-
-  return (
-    parts[2] +
-    "/" +
-    parts[1]
-  );
-
-}
-
-
-/* Day Off */
+/* DAY OFF */
 
 function isDayOff(date){
 
-  return (
+  const days =
+    S.settings.daysOff || [];
 
-    Array.isArray(
-      S.settings.daysOff
-    )
-
-    &&
-
-    S.settings.daysOff.includes(date)
-
-  );
+  return days.includes(date);
 
 }
 
 
-/* Taken Slots */
 
-function taken(date,time){
+/* CHECK FULL */
+
+function full(date,time){
 
   const key =
     date + "_" + time;
 
-  if(
-    S.availability &&
-    S.availability[key]
-  ){
+  const item =
+    S.availability[key];
 
-    return (
-      Number(
-        S.availability[key]
-      ) || 0
-    );
+  if(!item) return false;
 
-  }
+  const taken =
+    Number(item.taken || 0);
 
-  return 0;
-
-}
-
-
-/* Full Slot */
-
-function full(date,time){
-
-  return (
-
-    taken(date,time)
-
-    >=
-
+  const capacity =
     Number(
       S.settings.capacity || 2
-    )
+    );
 
+  return taken >= capacity;
+
+}
+
+
+
+/* DATE HELPERS */
+
+function pad(n){
+
+  return String(n).padStart(2,"0");
+
+}
+
+
+function dateKey(date){
+
+  return (
+    date.getFullYear() +
+    "-" +
+    pad(date.getMonth()+1) +
+    "-" +
+    pad(date.getDate())
   );
 
 }
 
 
-/* Create Time Slots */
 
-function makeTimes(){
-
-  const result = [];
-
-  const start =
-    S.settings.start ||
-    "10:00";
-
-  const end =
-    S.settings.end ||
-    "22:00";
-
-  const slot =
-    Number(
-      S.settings.slot || 60
-    );
-
-  let [sh,sm] =
-    start.split(":").map(Number);
-
-  let [eh,em] =
-    end.split(":").map(Number);
-
-  let current =
-    sh * 60 + sm;
-
-  const finish =
-    eh * 60 + em;
-
-  while(current < finish){
-
-    const h =
-      Math.floor(current / 60);
-
-    const m =
-      current % 60;
-
-    result.push(
-
-      String(h).padStart(2,"0")
-
-      +
-
-      ":"
-
-      +
-
-      String(m).padStart(2,"0")
-
-    );
-
-    current += slot;
-
-  }
-
-  return result;
-
-}
-
-
-/* Render Dates */
-
-function renderDates(){
-
-  const el =
-    document.getElementById("dates");
-
-  if(!el){
-    return;
-  }
-
-  el.innerHTML = "";
-
-  const start =
-    todayString();
-
-  for(
-    let i=0;
-    i<21;
-    i++
-  ){
-
-    const date =
-      addDays(start,i);
-
-    const button =
-      document.createElement("button");
-
-    button.type =
-      "button";
-
-    button.className =
-      "date-btn";
-
-    if(
-      S.selectedDate === date
-    ){
-
-      button.classList.add("selected");
-
-    }
-
-    button.innerHTML =
-      "<strong>" +
-      dayName(date) +
-      "</strong><br>" +
-      shortDate(date);
-
-    button.onclick =
-      function(){
-        selectDate(date);
-      };
-
-    el.appendChild(button);
-
-  }
-
-}
-
-
-/* Select Date */
-
-function selectDate(date){
-
-  S.selectedDate =
-    date;
-
-  S.selectedTime =
-    "";
-
-  renderDates();
-
-  renderTimes();
-
-}
-
-
-/* Render Times */
-
-function renderTimes(){
-
-  const el =
-    document.getElementById("times");
-
-  if(!el){
-    return;
-  }
-
-  el.innerHTML = "";
-
-  if(!S.selectedDate){
-
-    el.innerHTML =
-      '<div class="empty">اختر التاريخ أولاً</div>';
-
-    return;
-
-  }
-
-  if(
-    isDayOff(S.selectedDate)
-  ){
-
-    el.innerHTML =
-      '<div class="empty">هذا اليوم غير متاح للحجز</div>';
-
-    return;
-
-  }
-
-  const times =
-    makeTimes();
-
-  if(times.length === 0){
-
-    el.innerHTML =
-      '<div class="empty">لا توجد أوقات متاحة</div>';
-
-    return;
-
-  }
-
-  times.forEach(
-    function(time){
-
-      const button =
-        document.createElement("button");
-
-      button.type =
-        "button";
-
-      button.className =
-        "time-btn";
-
-      const isFull =
-        full(
-          S.selectedDate,
-          time
-        );
-
-      if(isFull){
-
-        button.classList.add("full");
-
-        button.disabled =
-          true;
-
-        button.textContent =
-          time + " ممتلئ";
-
-      }
-
-      else{
-
-        button.textContent =
-          time;
-
-        if(
-          S.selectedTime === time
-        ){
-
-          button.classList.add("selected");
-
-        }
-
-        button.onclick =
-          function(){
-            selectTime(time);
-          };
-
-      }
-
-      el.appendChild(button);
-
-    }
-  );
-
-}
-
-
-/* Select Time */
-
-function selectTime(time){
-
-  S.selectedTime =
-    time;
-
-  renderTimes();
-
-}
-
-
-/* Render Home */
+/* RENDER HOME */
 
 function renderHome(){
 
@@ -1054,32 +675,6 @@ function renderHome(){
 
   }
 
-  const wa =
-    waNum(
-      S.settings.whatsapp
-    );
-
-  const link =
-    document.getElementById("whatsappLink");
-
-  if(link){
-
-    if(wa){
-
-      link.href =
-        "https://wa.me/" +
-        wa;
-
-    }
-
-    else{
-
-      link.href =
-        "#";
-
-    }
-
-  }
 
   renderDates();
 
@@ -1088,18 +683,251 @@ function renderHome(){
 }
 
 
+
+/* DATES */
+
+function renderDates(){
+
+  const container =
+    document.getElementById("dates");
+
+  if(!container) return;
+
+  container.innerHTML = "";
+
+  const today =
+    new Date();
+
+  for(let i=0;i<21;i++){
+
+    const d =
+      new Date(today);
+
+    d.setDate(
+      today.getDate()+i
+    );
+
+    const key =
+      dateKey(d);
+
+    const btn =
+      document.createElement("button");
+
+    btn.className =
+      "date-btn" +
+      (
+        S.selectedDate === key
+        ? " active"
+        : ""
+      );
+
+    const day =
+      d.toLocaleDateString(
+        "ar",
+        {weekday:"short"}
+      );
+
+    const date =
+      d.toLocaleDateString(
+        "ar",
+        {
+          day:"numeric",
+          month:"numeric"
+        }
+      );
+
+    btn.innerHTML =
+      "<strong>" +
+      day +
+      "</strong><br>" +
+      date;
+
+    btn.onclick =
+      function(){
+
+        selectDate(key);
+
+      };
+
+    container.appendChild(btn);
+
+  }
+
+}
+
+
+
+/* SELECT DATE */
+
+function selectDate(date){
+
+  S.selectedDate =
+    date;
+
+  S.selectedTime =
+    "";
+
+  renderDates();
+
+  renderTimes();
+
+}
+
+
+
+/* TIMES */
+
+function renderTimes(){
+
+  const container =
+    document.getElementById("times");
+
+  if(!container) return;
+
+  container.innerHTML = "";
+
+
+  if(!S.selectedDate){
+
+    container.innerHTML =
+      "<div>اختر التاريخ أولاً</div>";
+
+    return;
+
+  }
+
+
+  const start =
+    S.settings.start ||
+    "10:00";
+
+  const end =
+    S.settings.end ||
+    "22:00";
+
+  const slot =
+    Number(
+      S.settings.slot || 60
+    );
+
+
+  let parts =
+    start.split(":");
+
+  let h =
+    Number(parts[0]);
+
+  let m =
+    Number(parts[1]);
+
+
+  const endParts =
+    end.split(":");
+
+  const endMinutes =
+    Number(endParts[0])*60 +
+    Number(endParts[1]);
+
+
+  while(
+    h*60+m < endMinutes
+  ){
+
+    const time =
+      pad(h) + ":" + pad(m);
+
+    const btn =
+      document.createElement("button");
+
+    const isFull =
+      full(
+        S.selectedDate,
+        time
+      );
+
+    btn.className =
+      "time-btn" +
+      (
+        S.selectedTime === time
+        ? " active"
+        : ""
+      ) +
+      (
+        isFull
+        ? " full"
+        : ""
+      );
+
+    btn.textContent =
+      isFull
+      ? time + " ممتلئ"
+      : time;
+
+    if(!isFull){
+
+      btn.onclick =
+        function(){
+
+          selectTime(time);
+
+        };
+
+    }else{
+
+      btn.disabled = true;
+
+    }
+
+    container.appendChild(btn);
+
+    m += slot;
+
+    if(m >= 60){
+
+      h += Math.floor(m/60);
+
+      m =
+        m % 60;
+
+    }
+
+  }
+
+}
+
+
+
+/* SELECT TIME */
+
+function selectTime(time){
+
+  S.selectedTime =
+    time;
+
+  renderTimes();
+
+}
+
+
+
 /* CREATE BOOKING */
 
 async function createBooking(){
 
   const nameEl =
-    document.getElementById("customerName");
+    document.getElementById(
+      "customerName"
+    );
 
   const phoneEl =
-    document.getElementById("customerPhone");
+    document.getElementById(
+      "customerPhone"
+    );
 
   const notesEl =
-    document.getElementById("customerNotes");
+    document.getElementById(
+      "customerNotes"
+    );
 
 
   if(
@@ -1139,32 +967,10 @@ async function createBooking(){
   }
 
 
-  if(name.length < 2){
-
-    bookingError(
-      "الاسم قصير جدًا"
-    );
-
-    return;
-
-  }
-
-
   if(!phone){
 
     bookingError(
       "يرجى كتابة رقم الهاتف"
-    );
-
-    return;
-
-  }
-
-
-  if(phone.length < 6){
-
-    bookingError(
-      "يرجى إدخال رقم هاتف صحيح"
     );
 
     return;
@@ -1194,62 +1000,31 @@ async function createBooking(){
   }
 
 
-  if(
-    isDayOff(S.selectedDate)
-  ){
-
-    bookingError(
-      "هذا اليوم غير متاح للحجز"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    full(
-      S.selectedDate,
-      S.selectedTime
-    )
-  ){
-
-    bookingError(
-      "عذرًا، هذا الموعد أصبح ممتلئًا"
-    );
-
-    return;
-
-  }
-
-
   showBookingModal();
 
 
   try{
 
+    console.log(
+      "START FIRESTORE TEST"
+    );
+
+
     const bookingData = {
 
-      name:
-        name,
+      name:name,
 
-      phone:
-        phone,
+      phone:phone,
 
-      date:
-        S.selectedDate,
+      date:S.selectedDate,
 
-      time:
-        S.selectedTime,
+      time:S.selectedTime,
 
-      notes:
-        notes,
+      notes:notes,
 
-      status:
-        "pending",
+      status:"pending",
 
-      createdAt:
-        Date.now()
+      createdAt:Date.now()
 
     };
 
@@ -1260,12 +1035,40 @@ async function createBooking(){
     );
 
 
+    /*
+      مهم:
+      إذا لم يستجب Firestore
+      خلال 5 ثوانٍ سنظهر النتيجة
+      بدل أن تبقى النافذة معلقة.
+    */
+
     const testRef =
-      await db
-        .collection("bookings")
-        .add(
-          bookingData
-        );
+      await Promise.race([
+
+        db
+          .collection("bookings")
+          .add(bookingData),
+
+        new Promise(
+          function(_,reject){
+
+            setTimeout(
+              function(){
+
+                reject(
+                  new Error(
+                    "Firestore لم يستجب خلال 5 ثوانٍ"
+                  )
+                );
+
+              },
+              5000
+            );
+
+          }
+        )
+
+      ]);
 
 
     console.log(
@@ -1274,20 +1077,19 @@ async function createBooking(){
     );
 
 
+    bookingSuccess();
+
+
     S.selectedTime =
       "";
-
-
-    renderHome();
-
-
-    bookingSuccess();
 
 
     setTimeout(
       function(){
 
         hideBookingModal();
+
+        renderHome();
 
       },
       2500
@@ -1299,15 +1101,14 @@ async function createBooking(){
   catch(error){
 
     console.error(
-      "CREATE BOOKING ERROR:",
+      "FIRESTORE TEST ERROR:",
       error
     );
 
 
     bookingError(
 
-      "خطأ Firebase: " +
-
+      "النتيجة: " +
       (
         error.message ||
         error.code ||
@@ -1321,7 +1122,8 @@ async function createBooking(){
 }
 
 
-/* Firebase Settings */
+
+/* FIREBASE SETTINGS */
 
 db
   .collection("settings")
@@ -1366,7 +1168,8 @@ db
   );
 
 
-/* Firebase Availability */
+
+/* FIREBASE AVAILABILITY */
 
 db
   .collection("settings")
@@ -1413,9 +1216,11 @@ db
   );
 
 
-/* Start App */
+
+/* START APP */
 
 renderHome();
+
 
 </script>
 
