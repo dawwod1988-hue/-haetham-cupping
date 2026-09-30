@@ -2,7 +2,6 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -223,7 +222,6 @@
       اختر التاريخ
     </label>
 
-
     <div
       id="dates"
       class="dates"
@@ -233,7 +231,6 @@
     <label>
       اختر الوقت
     </label>
-
 
     <div
       id="times"
@@ -332,12 +329,11 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
-
 <script>
 
 
 /* =========================
-   Firebase
+   Firebase Configuration
 ========================= */
 
 const firebaseConfig = {
@@ -366,7 +362,9 @@ const firebaseConfig = {
 };
 
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(
+  firebaseConfig
+);
 
 
 const db =
@@ -379,7 +377,7 @@ const auth =
 
 
 /* =========================
-   حالة التطبيق
+   App State
 ========================= */
 
 const S = {
@@ -426,13 +424,15 @@ const S = {
 
 
 /* =========================
-   الرسائل
+   Messages
 ========================= */
 
 function message(text,type){
 
   const el =
-    document.getElementById("message");
+    document.getElementById(
+      "message"
+    );
 
   if(!el){
     return;
@@ -449,7 +449,7 @@ function message(text,type){
 
 
 /* =========================
-   تحويل الأرقام
+   Convert Arabic Numbers
 ========================= */
 
 function toEn(value){
@@ -483,7 +483,7 @@ function toEn(value){
 
 
 /* =========================
-   رقم واتساب
+   WhatsApp Number
 ========================= */
 
 function waNum(p){
@@ -492,7 +492,9 @@ function waNum(p){
     toEn(p).replace(/\D/g,'');
 
 
-  if(d.startsWith("00")){
+  if(
+    d.startsWith("00")
+  ){
 
     d =
       d.slice(2);
@@ -500,7 +502,9 @@ function waNum(p){
   }
 
 
-  if(/^0\d{8,9}$/.test(d)){
+  if(
+    /^0\d{8,9}$/.test(d)
+  ){
 
     d =
       "972" + d.slice(1);
@@ -508,7 +512,9 @@ function waNum(p){
   }
 
 
-  if(/^9720\d{8,9}$/.test(d)){
+  if(
+    /^9720\d{8,9}$/.test(d)
+  ){
 
     d =
       "972" + d.slice(4);
@@ -523,7 +529,7 @@ function waNum(p){
 
 
 /* =========================
-   تاريخ اليوم
+   Today's Date
 ========================= */
 
 function todayString(){
@@ -559,19 +565,23 @@ function todayString(){
 
 
 /* =========================
-   إضافة أيام
+   Add Days
 ========================= */
 
-function addDays(dateString,days){
+function addDays(
+  dateString,
+  days
+){
 
   const d =
     new Date(
-      dateString + "T00:00:00"
+      dateString +
+      "T00:00:00"
     );
 
 
   d.setDate(
-    d.getDate()+days
+    d.getDate() + days
   );
 
 
@@ -602,14 +612,15 @@ function addDays(dateString,days){
 
 
 /* =========================
-   اسم اليوم
+   Day Name
 ========================= */
 
 function dayName(dateString){
 
   const d =
     new Date(
-      dateString + "T00:00:00"
+      dateString +
+      "T00:00:00"
     );
 
 
@@ -635,7 +646,7 @@ function dayName(dateString){
 
 
 /* =========================
-   التاريخ المختصر
+   Short Date
 ========================= */
 
 function shortDate(dateString){
@@ -655,7 +666,7 @@ function shortDate(dateString){
 
 
 /* =========================
-   يوم عطلة؟
+   Day Off
 ========================= */
 
 function isDayOff(date){
@@ -679,10 +690,13 @@ function isDayOff(date){
 
 
 /* =========================
-   عدد الحجوزات
+   Taken Slots
 ========================= */
 
-function taken(date,time){
+function taken(
+  date,
+  time
+){
 
   const key =
     date + "_" + time;
@@ -709,10 +723,13 @@ function taken(date,time){
 
 
 /* =========================
-   الموعد ممتلئ؟
+   Full Slot
 ========================= */
 
-function full(date,time){
+function full(
+  date,
+  time
+){
 
   return (
 
@@ -734,7 +751,7 @@ function full(date,time){
 
 
 /* =========================
-   إنشاء الأوقات
+   Create Time Slots
 ========================= */
 
 function makeTimes(){
@@ -759,11 +776,15 @@ function makeTimes(){
 
 
   let [sh,sm] =
-    start.split(":").map(Number);
+    start
+      .split(":")
+      .map(Number);
 
 
   let [eh,em] =
-    end.split(":").map(Number);
+    end
+      .split(":")
+      .map(Number);
 
 
   let current =
@@ -774,7 +795,9 @@ function makeTimes(){
     eh * 60 + em;
 
 
-  while(current < finish){
+  while(
+    current < finish
+  ){
 
     const h =
       Math.floor(
@@ -788,11 +811,21 @@ function makeTimes(){
 
     result.push(
 
-      String(h).padStart(2,"0")
+      String(h).padStart(
+        2,
+        "0"
+      )
+
       +
+
       ":"
+
       +
-      String(m).padStart(2,"0")
+
+      String(m).padStart(
+        2,
+        "0"
+      )
 
     );
 
@@ -809,13 +842,15 @@ function makeTimes(){
 
 
 /* =========================
-   عرض التواريخ
+   Render Dates
 ========================= */
 
 function renderDates(){
 
   const el =
-    document.getElementById("dates");
+    document.getElementById(
+      "dates"
+    );
 
 
   if(!el){
@@ -823,7 +858,8 @@ function renderDates(){
   }
 
 
-  el.innerHTML = "";
+  el.innerHTML =
+    "";
 
 
   const start =
@@ -871,8 +907,11 @@ function renderDates(){
     button.innerHTML =
 
       "<strong>" +
+
       dayName(date) +
+
       "</strong><br>" +
+
       shortDate(date);
 
 
@@ -895,7 +934,7 @@ function renderDates(){
 
 
 /* =========================
-   اختيار التاريخ
+   Select Date
 ========================= */
 
 function selectDate(date){
@@ -917,13 +956,15 @@ function selectDate(date){
 
 
 /* =========================
-   عرض الأوقات
+   Render Times
 ========================= */
 
 function renderTimes(){
 
   const el =
-    document.getElementById("times");
+    document.getElementById(
+      "times"
+    );
 
 
   if(!el){
@@ -931,7 +972,8 @@ function renderTimes(){
   }
 
 
-  el.innerHTML = "";
+  el.innerHTML =
+    "";
 
 
   if(!S.selectedDate){
@@ -962,7 +1004,9 @@ function renderTimes(){
     makeTimes();
 
 
-  if(times.length === 0){
+  if(
+    times.length === 0
+  ){
 
     el.innerHTML =
       '<div class="empty">لا توجد أوقات متاحة</div>';
@@ -1008,7 +1052,8 @@ function renderTimes(){
 
 
         button.textContent =
-          time + " ممتلئ";
+          time +
+          " ممتلئ";
 
       }
 
@@ -1051,7 +1096,7 @@ function renderTimes(){
 
 
 /* =========================
-   اختيار الوقت
+   Select Time
 ========================= */
 
 function selectTime(time){
@@ -1067,7 +1112,7 @@ function selectTime(time){
 
 
 /* =========================
-   الصفحة الرئيسية
+   Render Home
 ========================= */
 
 function renderHome(){
@@ -1119,7 +1164,8 @@ function renderHome(){
     if(wa){
 
       link.href =
-        "https://wa.me/" + wa;
+        "https://wa.me/" +
+        wa;
 
     }
 
@@ -1142,14 +1188,21 @@ function renderHome(){
 
 
 /* ==================================================
-   إرسال الحجز
+   CREATE BOOKING
 ================================================== */
 
 async function createBooking(){
 
   /*
-    أول شيء يظهر للمستخدم
+    اختبار مهم جدًا:
+    إذا ظهر هذا التنبيه، نعرف أن
+    الكود الجديد وصل إلى الهاتف.
   */
+
+  alert(
+    "تم تشغيل نسخة الكود الجديدة"
+  );
+
 
   message(
     "جاري إرسال الحجز...",
@@ -1205,8 +1258,6 @@ async function createBooking(){
 
 
 
-  /* الاسم */
-
   if(!name){
 
     message(
@@ -1219,7 +1270,9 @@ async function createBooking(){
   }
 
 
-  if(name.length < 2){
+  if(
+    name.length < 2
+  ){
 
     message(
       "الاسم قصير جدًا",
@@ -1230,9 +1283,6 @@ async function createBooking(){
 
   }
 
-
-
-  /* الهاتف */
 
   if(!phone){
 
@@ -1246,7 +1296,9 @@ async function createBooking(){
   }
 
 
-  if(phone.length < 6){
+  if(
+    phone.length < 6
+  ){
 
     message(
       "يرجى إدخال رقم هاتف صحيح",
@@ -1258,10 +1310,9 @@ async function createBooking(){
   }
 
 
-
-  /* التاريخ */
-
-  if(!S.selectedDate){
+  if(
+    !S.selectedDate
+  ){
 
     message(
       "يرجى اختيار التاريخ",
@@ -1273,10 +1324,9 @@ async function createBooking(){
   }
 
 
-
-  /* الوقت */
-
-  if(!S.selectedTime){
+  if(
+    !S.selectedTime
+  ){
 
     message(
       "يرجى اختيار الوقت",
@@ -1287,9 +1337,6 @@ async function createBooking(){
 
   }
 
-
-
-  /* يوم العطلة */
 
   if(
     isDayOff(
@@ -1306,9 +1353,6 @@ async function createBooking(){
 
   }
 
-
-
-  /* الموعد ممتلئ */
 
   if(
     full(
@@ -1327,12 +1371,7 @@ async function createBooking(){
   }
 
 
-
   try{
-
-    /*
-      البيانات التي سترسل إلى Firestore
-    */
 
     const bookingData = {
 
@@ -1366,11 +1405,6 @@ async function createBooking(){
     );
 
 
-
-    /*
-      طلب Firebase
-    */
-
     const firebaseRequest =
 
       db
@@ -1379,11 +1413,6 @@ async function createBooking(){
           bookingData
         );
 
-
-
-    /*
-      مهلة 10 ثوانٍ
-    */
 
     const timeout =
 
@@ -1409,11 +1438,6 @@ async function createBooking(){
       );
 
 
-
-    /*
-      ننتظر Firebase أو انتهاء المهلة
-    */
-
     await Promise.race([
 
       firebaseRequest,
@@ -1423,14 +1447,8 @@ async function createBooking(){
     ]);
 
 
-
-    /*
-      إذا وصلنا هنا
-      فالحجز تم حفظه
-    */
-
     console.log(
-      "BOOKING SAVED SUCCESSFULLY"
+      "BOOKING SAVED"
     );
 
 
@@ -1447,7 +1465,6 @@ async function createBooking(){
     );
 
 
-
   }
 
   catch(error){
@@ -1457,10 +1474,6 @@ async function createBooking(){
       error
     );
 
-
-    /*
-      إظهار الخطأ الحقيقي
-    */
 
     message(
 
@@ -1483,7 +1496,7 @@ async function createBooking(){
 
 
 /* =========================
-   قراءة إعدادات المركز
+   Firebase Settings
 ========================= */
 
 db
@@ -1493,7 +1506,9 @@ db
 
     function(doc){
 
-      if(doc.exists){
+      if(
+        doc.exists
+      ){
 
         const data =
           doc.data();
@@ -1529,7 +1544,7 @@ db
 
 
 /* =========================
-   قراءة التوافر
+   Firebase Availability
 ========================= */
 
 db
@@ -1539,7 +1554,9 @@ db
 
     function(doc){
 
-      if(doc.exists){
+      if(
+        doc.exists
+      ){
 
         S.availability =
           doc.data() || {};
@@ -1553,11 +1570,6 @@ db
 
       }
 
-
-      /*
-        تحديث الأوقات فقط
-        حتى لا تختفي بيانات العميل
-      */
 
       if(
         S.selectedDate &&
@@ -1585,7 +1597,7 @@ db
 
 
 /* =========================
-   التشغيل
+   Start App
 ========================= */
 
 renderHome();
