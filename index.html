@@ -142,26 +142,6 @@
       word-break:break-word;
     }
 
-    .message.info{
-      display:block;
-      background:#e8f1ff;
-      color:#174ea6;
-    }
-
-    .message.success{
-      display:block;
-      background:#e7f7ed;
-      color:#137333;
-    }
-
-    .message.error{
-      display:block;
-      background:#fdeaea;
-      color:#b3261e;
-      direction:ltr;
-      text-align:left;
-    }
-
     .empty{
       color:#777;
       text-align:center;
@@ -182,6 +162,148 @@
       color:#777;
     }
 
+
+    /* =========================
+       Booking Modal
+    ========================= */
+
+    .booking-modal{
+
+      position:fixed;
+
+      inset:0;
+
+      background:rgba(0,0,0,.45);
+
+      display:none;
+
+      align-items:center;
+
+      justify-content:center;
+
+      z-index:9999;
+
+      padding:20px;
+
+    }
+
+
+    .booking-modal.show{
+
+      display:flex;
+
+    }
+
+
+    .booking-modal-box{
+
+      background:white;
+
+      width:100%;
+
+      max-width:360px;
+
+      border-radius:20px;
+
+      padding:30px 20px;
+
+      text-align:center;
+
+      box-shadow:
+        0 10px 40px
+        rgba(0,0,0,.2);
+
+    }
+
+
+    .booking-spinner{
+
+      width:45px;
+
+      height:45px;
+
+      border:4px solid #eee;
+
+      border-top-color:#111827;
+
+      border-radius:50%;
+
+      animation:
+        spin 1s linear infinite;
+
+      margin:
+        0 auto 20px;
+
+    }
+
+
+    @keyframes spin{
+
+      to{
+
+        transform:
+          rotate(360deg);
+
+      }
+
+    }
+
+
+    .booking-modal-title{
+
+      font-size:20px;
+
+      font-weight:bold;
+
+      margin-bottom:8px;
+
+    }
+
+
+    .booking-modal-text{
+
+      color:#666;
+
+      font-size:15px;
+
+      line-height:1.6;
+
+      word-break:break-word;
+
+    }
+
+
+    .booking-modal.success
+    .booking-spinner{
+
+      display:none;
+
+    }
+
+
+    .booking-modal.error
+    .booking-spinner{
+
+      display:none;
+
+    }
+
+
+    .booking-modal.success
+    .booking-modal-title{
+
+      color:#137333;
+
+    }
+
+
+    .booking-modal.error
+    .booking-modal-title{
+
+      color:#b3261e;
+
+    }
+
   </style>
 
 </head>
@@ -189,7 +311,49 @@
 
 <body>
 
+
+<!-- =========================
+     Booking Modal
+========================= -->
+
+<div
+  id="bookingModal"
+  class="booking-modal"
+>
+
+  <div
+    class="booking-modal-box"
+  >
+
+    <div
+      id="bookingSpinner"
+      class="booking-spinner"
+    ></div>
+
+
+    <div
+      id="bookingModalTitle"
+      class="booking-modal-title"
+    >
+      جاري إرسال الحجز...
+    </div>
+
+
+    <div
+      id="bookingModalText"
+      class="booking-modal-text"
+    >
+      يرجى الانتظار...
+    </div>
+
+  </div>
+
+</div>
+
+
+
 <div class="container">
+
 
   <div class="header">
 
@@ -314,11 +478,14 @@
     سيتم تأكيد الموعد بعد مراجعة طلب الحجز.
   </p>
 
+
 </div>
 
 
 
-<!-- Firebase -->
+<!-- =========================
+     Firebase
+========================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
@@ -370,15 +537,15 @@ const db =
 
 
 /*
-  تحسين اتصال Firestore
-  مع iPhone / Safari
+   تحسين اتصال Firestore
+   مع iPhone / Safari
 */
 
 db.settings({
 
-  experimentalForceLongPolling: true,
+  experimentalForceLongPolling:true,
 
-  useFetchStreams: false
+  useFetchStreams:false
 
 });
 
@@ -447,7 +614,9 @@ function message(text,type){
     );
 
   if(!el){
+
     return;
+
   }
 
   el.className =
@@ -461,14 +630,132 @@ function message(text,type){
 
 
 /* =========================
+   Booking Modal
+========================= */
+
+function showBookingModal(){
+
+  const modal =
+    document.getElementById(
+      "bookingModal"
+    );
+
+  const title =
+    document.getElementById(
+      "bookingModalTitle"
+    );
+
+  const text =
+    document.getElementById(
+      "bookingModalText"
+    );
+
+
+  modal.className =
+    "booking-modal show";
+
+
+  title.textContent =
+    "جاري إرسال الحجز...";
+
+
+  text.textContent =
+    "يرجى الانتظار...";
+
+}
+
+
+function hideBookingModal(){
+
+  const modal =
+    document.getElementById(
+      "bookingModal"
+    );
+
+
+  modal.className =
+    "booking-modal";
+
+}
+
+
+function bookingSuccess(){
+
+  const modal =
+    document.getElementById(
+      "bookingModal"
+    );
+
+  const title =
+    document.getElementById(
+      "bookingModalTitle"
+    );
+
+  const text =
+    document.getElementById(
+      "bookingModalText"
+    );
+
+
+  modal.className =
+    "booking-modal show success";
+
+
+  title.textContent =
+    "تم إرسال الحجز بنجاح ✅";
+
+
+  text.textContent =
+    "سيتم تأكيد الموعد بعد مراجعة طلب الحجز.";
+
+}
+
+
+function bookingError(errorText){
+
+  const modal =
+    document.getElementById(
+      "bookingModal"
+    );
+
+  const title =
+    document.getElementById(
+      "bookingModalTitle"
+    );
+
+  const text =
+    document.getElementById(
+      "bookingModalText"
+    );
+
+
+  modal.className =
+    "booking-modal show error";
+
+
+  title.textContent =
+    "تعذر إرسال الحجز";
+
+
+  text.textContent =
+    errorText;
+
+}
+
+
+
+/* =========================
    Convert Arabic Numbers
 ========================= */
 
 function toEn(value){
 
   if(!value){
+
     return "";
+
   }
+
 
   return value
 
@@ -866,7 +1153,9 @@ function renderDates(){
 
 
   if(!el){
+
     return;
+
   }
 
 
@@ -980,7 +1269,9 @@ function renderTimes(){
 
 
   if(!el){
+
     return;
+
   }
 
 
@@ -1205,12 +1496,6 @@ function renderHome(){
 
 async function createBooking(){
 
-  message(
-    "جاري إرسال الحجز...",
-    "info"
-  );
-
-
   const nameEl =
     document.getElementById(
       "customerName"
@@ -1234,9 +1519,8 @@ async function createBooking(){
     !phoneEl
   ){
 
-    message(
-      "تعذر قراءة بيانات الحجز",
-      "error"
+    bookingError(
+      "تعذر قراءة بيانات الحجز"
     );
 
     return;
@@ -1260,9 +1544,8 @@ async function createBooking(){
 
   if(!name){
 
-    message(
-      "يرجى كتابة الاسم",
-      "error"
+    bookingError(
+      "يرجى كتابة الاسم"
     );
 
     return;
@@ -1274,9 +1557,8 @@ async function createBooking(){
     name.length < 2
   ){
 
-    message(
-      "الاسم قصير جدًا",
-      "error"
+    bookingError(
+      "الاسم قصير جدًا"
     );
 
     return;
@@ -1286,9 +1568,8 @@ async function createBooking(){
 
   if(!phone){
 
-    message(
-      "يرجى كتابة رقم الهاتف",
-      "error"
+    bookingError(
+      "يرجى كتابة رقم الهاتف"
     );
 
     return;
@@ -1300,9 +1581,8 @@ async function createBooking(){
     phone.length < 6
   ){
 
-    message(
-      "يرجى إدخال رقم هاتف صحيح",
-      "error"
+    bookingError(
+      "يرجى إدخال رقم هاتف صحيح"
     );
 
     return;
@@ -1314,9 +1594,8 @@ async function createBooking(){
     !S.selectedDate
   ){
 
-    message(
-      "يرجى اختيار التاريخ",
-      "error"
+    bookingError(
+      "يرجى اختيار التاريخ"
     );
 
     return;
@@ -1328,9 +1607,8 @@ async function createBooking(){
     !S.selectedTime
   ){
 
-    message(
-      "يرجى اختيار الوقت",
-      "error"
+    bookingError(
+      "يرجى اختيار الوقت"
     );
 
     return;
@@ -1344,9 +1622,8 @@ async function createBooking(){
     )
   ){
 
-    message(
-      "هذا اليوم غير متاح للحجز",
-      "error"
+    bookingError(
+      "هذا اليوم غير متاح للحجز"
     );
 
     return;
@@ -1361,14 +1638,16 @@ async function createBooking(){
     )
   ){
 
-    message(
-      "عذرًا، هذا الموعد أصبح ممتلئًا",
-      "error"
+    bookingError(
+      "عذرًا، هذا الموعد أصبح ممتلئًا"
     );
 
     return;
 
   }
+
+
+  showBookingModal();
 
 
   try{
@@ -1424,9 +1703,16 @@ async function createBooking(){
     renderHome();
 
 
-    message(
-      "تم إرسال طلب الحجز بنجاح ✅",
-      "success"
+    bookingSuccess();
+
+
+    setTimeout(
+      function(){
+
+        hideBookingModal();
+
+      },
+      2500
     );
 
 
@@ -1440,7 +1726,7 @@ async function createBooking(){
     );
 
 
-    message(
+    bookingError(
 
       "خطأ Firebase: " +
 
@@ -1448,9 +1734,7 @@ async function createBooking(){
         error.message ||
         error.code ||
         "خطأ غير معروف"
-      ),
-
-      "error"
+      )
 
     );
 
@@ -1489,12 +1773,6 @@ db
 
       }
 
-
-      /*
-        لا نعيد بناء الصفحة أثناء
-        إدخال بيانات الحجز إذا كان
-        المستخدم قد اختار وقتًا.
-      */
 
       if(
         !S.selectedTime
