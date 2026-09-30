@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>هيثم للحجامة</title>
 
   <style>
+
     *{
       box-sizing:border-box;
     }
@@ -127,16 +134,13 @@
       color:white;
     }
 
-    .btn-primary:active{
-      transform:scale(.99);
-    }
-
     .message{
       padding:13px;
       border-radius:10px;
       margin-bottom:15px;
       display:none;
       text-align:center;
+      word-break:break-word;
     }
 
     .message.info{
@@ -157,7 +161,6 @@
       color:#b3261e;
       direction:ltr;
       text-align:left;
-      word-break:break-word;
     }
 
     .empty{
@@ -179,39 +182,84 @@
       font-size:13px;
       color:#777;
     }
+
   </style>
+
 </head>
+
 
 <body>
 
 <div class="container">
 
+
   <div class="header">
-    <h1 id="centerName">هيثم للحجامة</h1>
-    <p id="centerArea">أبو سنان</p>
+
+    <h1 id="centerName">
+      هيثم للحجامة
+    </h1>
+
+    <p id="centerArea">
+      أبو سنان
+    </p>
+
   </div>
 
-  <div id="message" class="message"></div>
+
+  <div
+    id="message"
+    class="message"
+  ></div>
+
 
   <div class="card">
 
-    <h2>حجز موعد</h2>
+    <h2>
+      حجز موعد
+    </h2>
 
-    <label>اختر التاريخ</label>
-    <div id="dates" class="dates"></div>
 
-    <label>اختر الوقت</label>
-    <div id="times" class="times">
-      <div class="empty">اختر التاريخ أولاً</div>
+    <label>
+      اختر التاريخ
+    </label>
+
+
+    <div
+      id="dates"
+      class="dates"
+    ></div>
+
+
+    <label>
+      اختر الوقت
+    </label>
+
+
+    <div
+      id="times"
+      class="times"
+    >
+
+      <div class="empty">
+        اختر التاريخ أولاً
+      </div>
+
     </div>
 
   </div>
 
+
   <div class="card">
 
-    <h2>بيانات الحجز</h2>
+    <h2>
+      بيانات الحجز
+    </h2>
 
-    <label for="customerName">الاسم</label>
+
+    <label for="customerName">
+      الاسم
+    </label>
+
     <input
       id="customerName"
       type="text"
@@ -219,7 +267,11 @@
       autocomplete="name"
     >
 
-    <label for="customerPhone">رقم الهاتف</label>
+
+    <label for="customerPhone">
+      رقم الهاتف
+    </label>
+
     <input
       id="customerPhone"
       type="tel"
@@ -227,11 +279,16 @@
       autocomplete="tel"
     >
 
-    <label for="customerNotes">ملاحظات</label>
+
+    <label for="customerNotes">
+      ملاحظات
+    </label>
+
     <textarea
       id="customerNotes"
       placeholder="أي ملاحظات إضافية..."
     ></textarea>
+
 
     <button
       class="btn btn-primary"
@@ -243,6 +300,7 @@
 
   </div>
 
+
   <a
     id="whatsappLink"
     class="whatsapp"
@@ -252,56 +310,119 @@
     التواصل عبر واتساب
   </a>
 
-  <p class="small" style="text-align:center;margin-top:20px;">
+
+  <p
+    class="small"
+    style="text-align:center;margin-top:20px;"
+  >
     سيتم تأكيد الموعد بعد مراجعة طلب الحجز.
   </p>
+
 
 </div>
 
 
+
 <!-- Firebase -->
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 
 
 <script>
 
+
+/* =========================
+   Firebase
+========================= */
+
 const firebaseConfig = {
-  apiKey: "AIzaSyClhrm3BtsQhOOUe_Am9z69DkRAEwsweJ4",
-  authDomain: "haetham-80b2a.firebaseapp.com",
-  projectId: "haetham-80b2a",
-  storageBucket: "haetham-80b2a.firebasestorage.app",
-  messagingSenderId: "288982607003",
-  appId: "1:288982607003:web:841f87f604b80b5745d23e",
-  measurementId: "G-SSQSPWN5EX"
+
+  apiKey:
+    "AIzaSyClhrm3BtsQhOOUe_Am9z69DkRAEwsweJ4",
+
+  authDomain:
+    "haetham-80b2a.firebaseapp.com",
+
+  projectId:
+    "haetham-80b2a",
+
+  storageBucket:
+    "haetham-80b2a.firebasestorage.app",
+
+  messagingSenderId:
+    "288982607003",
+
+  appId:
+    "1:288982607003:web:841f87f604b80b5745d23e",
+
+  measurementId:
+    "G-SSQSPWN5EX"
+
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
-const db = firebase.firestore();
-const auth = firebase.auth();
 
+const db =
+  firebase.firestore();
+
+
+const auth =
+  firebase.auth();
+
+
+
+/* =========================
+   حالة التطبيق
+========================= */
 
 const S = {
+
   settings: {
-    name: "هيثم للحجامة",
-    area: "أبو سنان",
-    whatsapp: "",
-    start: "10:00",
-    end: "22:00",
-    slot: 60,
-    capacity: 2,
-    daysOff: []
+
+    name:
+      "هيثم للحجامة",
+
+    area:
+      "أبو سنان",
+
+    whatsapp:
+      "",
+
+    start:
+      "10:00",
+
+    end:
+      "22:00",
+
+    slot:
+      60,
+
+    capacity:
+      2,
+
+    daysOff:
+      []
+
   },
 
-  availability: {},
+  availability:
+    {},
 
-  selectedDate: "",
-  selectedTime: "",
+  selectedDate:
+    "",
 
-  bookings: []
+  selectedTime:
+    ""
+
 };
+
 
 
 /* =========================
@@ -310,56 +431,95 @@ const S = {
 
 function message(text,type){
 
-  const el = document.getElementById("message");
+  const el =
+    document.getElementById("message");
 
-  if(!el) return;
+  if(!el){
+    return;
+  }
 
-  el.className = "message " + type;
-  el.textContent = text;
+  el.className =
+    "message " + type;
+
+  el.textContent =
+    text;
 
 }
 
 
+
 /* =========================
-   تحويل الأرقام العربية
+   تحويل الأرقام
 ========================= */
 
 function toEn(value){
 
-  if(!value) return "";
+  if(!value){
+    return "";
+  }
 
   return value
-    .replace(/[٠-٩]/g,function(d){
-      return "٠١٢٣٤٥٦٧٨٩".indexOf(d);
-    })
-    .replace(/[۰-۹]/g,function(d){
-      return "۰۱۲۳۴۵۶۷۸۹".indexOf(d);
-    });
+
+    .replace(
+      /[٠-٩]/g,
+      function(d){
+
+        return "٠١٢٣٤٥٦٧٨٩".indexOf(d);
+
+      }
+    )
+
+    .replace(
+      /[۰-۹]/g,
+      function(d){
+
+        return "۰۱۲۳۴۵۶۷۸۹".indexOf(d);
+
+      }
+    );
+
 }
 
 
+
 /* =========================
-   واتساب
+   رقم واتساب
 ========================= */
 
 function waNum(p){
 
-  let d = toEn(p).replace(/\D/g,'');
+  let d =
+    toEn(p).replace(/\D/g,'');
+
 
   if(d.startsWith("00")){
-    d = d.slice(2);
+
+    d =
+      d.slice(2);
+
   }
+
 
   if(/^0\d{8,9}$/.test(d)){
-    d = "972" + d.slice(1);
+
+    d =
+      "972" + d.slice(1);
+
   }
+
 
   if(/^9720\d{8,9}$/.test(d)){
-    d = "972" + d.slice(4);
+
+    d =
+      "972" + d.slice(4);
+
   }
 
+
   return d;
+
 }
+
 
 
 /* =========================
@@ -368,14 +528,34 @@ function waNum(p){
 
 function todayString(){
 
-  const d = new Date();
+  const d =
+    new Date();
 
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
 
-  return `${y}-${m}-${day}`;
+  const y =
+    d.getFullYear();
+
+
+  const m =
+    String(
+      d.getMonth()+1
+    ).padStart(2,"0");
+
+
+  const day =
+    String(
+      d.getDate()
+    ).padStart(2,"0");
+
+
+  return (
+    y + "-" +
+    m + "-" +
+    day
+  );
+
 }
+
 
 
 /* =========================
@@ -384,16 +564,41 @@ function todayString(){
 
 function addDays(dateString,days){
 
-  const d = new Date(dateString + "T00:00:00");
+  const d =
+    new Date(
+      dateString + "T00:00:00"
+    );
 
-  d.setDate(d.getDate()+days);
 
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
+  d.setDate(
+    d.getDate()+days
+  );
 
-  return `${y}-${m}-${day}`;
+
+  const y =
+    d.getFullYear();
+
+
+  const m =
+    String(
+      d.getMonth()+1
+    ).padStart(2,"0");
+
+
+  const day =
+    String(
+      d.getDate()
+    ).padStart(2,"0");
+
+
+  return (
+    y + "-" +
+    m + "-" +
+    day
+  );
+
 }
+
 
 
 /* =========================
@@ -402,9 +607,14 @@ function addDays(dateString,days){
 
 function dayName(dateString){
 
-  const d = new Date(dateString + "T00:00:00");
+  const d =
+    new Date(
+      dateString + "T00:00:00"
+    );
+
 
   const names = [
+
     "الأحد",
     "الإثنين",
     "الثلاثاء",
@@ -412,55 +622,115 @@ function dayName(dateString){
     "الخميس",
     "الجمعة",
     "السبت"
+
   ];
 
-  return names[d.getDay()];
+
+  return names[
+    d.getDay()
+  ];
+
 }
 
 
+
 /* =========================
-   تنسيق التاريخ
+   التاريخ المختصر
 ========================= */
 
 function shortDate(dateString){
 
-  const parts = dateString.split("-");
+  const parts =
+    dateString.split("-");
 
-  return parts[2] + "/" + parts[1];
+
+  return (
+    parts[2] +
+    "/" +
+    parts[1]
+  );
+
 }
 
 
+
 /* =========================
-   أيام العطلة
+   يوم عطلة؟
 ========================= */
 
 function isDayOff(date){
 
-  return Array.isArray(S.settings.daysOff)
-    && S.settings.daysOff.includes(date);
+  return (
+
+    Array.isArray(
+      S.settings.daysOff
+    )
+
+    &&
+
+    S.settings.daysOff.includes(
+      date
+    )
+
+  );
+
 }
 
 
+
 /* =========================
-   معرفة الامتلاء
+   عدد الحجوزات
 ========================= */
 
 function taken(date,time){
 
-  const key = date + "_" + time;
+  const key =
+    date + "_" + time;
 
-  if(S.availability && S.availability[key]){
-    return Number(S.availability[key]) || 0;
+
+  if(
+    S.availability &&
+    S.availability[key]
+  ){
+
+    return (
+      Number(
+        S.availability[key]
+      ) || 0
+    );
+
   }
 
+
   return 0;
+
 }
 
+
+
+/* =========================
+   الموعد ممتلئ؟
+========================= */
 
 function full(date,time){
 
-  return taken(date,time) >= Number(S.settings.capacity || 2);
+  return (
+
+    taken(
+      date,
+      time
+    )
+
+    >=
+
+    Number(
+      S.settings.capacity || 2
+    )
+
+  );
+
 }
+
 
 
 /* =========================
@@ -471,31 +741,71 @@ function makeTimes(){
 
   const result = [];
 
-  let start = S.settings.start || "10:00";
-  let end = S.settings.end || "22:00";
-  let slot = Number(S.settings.slot || 60);
 
-  let [sh,sm] = start.split(":").map(Number);
-  let [eh,em] = end.split(":").map(Number);
+  const start =
+    S.settings.start ||
+    "10:00";
 
-  let current = sh * 60 + sm;
-  const finish = eh * 60 + em;
+
+  const end =
+    S.settings.end ||
+    "22:00";
+
+
+  const slot =
+    Number(
+      S.settings.slot || 60
+    );
+
+
+  let [sh,sm] =
+    start.split(":").map(Number);
+
+
+  let [eh,em] =
+    end.split(":").map(Number);
+
+
+  let current =
+    sh * 60 + sm;
+
+
+  const finish =
+    eh * 60 + em;
+
 
   while(current < finish){
 
-    const h = Math.floor(current/60);
-    const m = current % 60;
+    const h =
+      Math.floor(
+        current / 60
+      );
+
+
+    const m =
+      current % 60;
+
 
     result.push(
-      String(h).padStart(2,"0") + ":" +
+
+      String(h).padStart(2,"0")
+      +
+      ":"
+      +
       String(m).padStart(2,"0")
+
     );
 
+
     current += slot;
+
   }
 
+
   return result;
+
 }
+
 
 
 /* =========================
@@ -504,37 +814,84 @@ function makeTimes(){
 
 function renderDates(){
 
-  const el = document.getElementById("dates");
+  const el =
+    document.getElementById("dates");
 
-  if(!el) return;
+
+  if(!el){
+    return;
+  }
+
 
   el.innerHTML = "";
 
-  const start = todayString();
 
-  for(let i=0;i<21;i++){
+  const start =
+    todayString();
 
-    const date = addDays(start,i);
 
-    const button = document.createElement("button");
+  for(
+    let i=0;
+    i<21;
+    i++
+  ){
 
-    button.type = "button";
-    button.className = "date-btn";
+    const date =
+      addDays(
+        start,
+        i
+      );
 
-    if(S.selectedDate === date){
-      button.classList.add("selected");
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+
+    button.type =
+      "button";
+
+
+    button.className =
+      "date-btn";
+
+
+    if(
+      S.selectedDate === date
+    ){
+
+      button.classList.add(
+        "selected"
+      );
+
     }
 
+
     button.innerHTML =
-      `<strong>${dayName(date)}</strong><br>${shortDate(date)}`;
 
-    button.onclick = function(){
-      selectDate(date);
-    };
+      "<strong>" +
+      dayName(date) +
+      "</strong><br>" +
+      shortDate(date);
 
-    el.appendChild(button);
+
+    button.onclick =
+      function(){
+
+        selectDate(date);
+
+      };
+
+
+    el.appendChild(
+      button
+    );
+
   }
+
 }
+
 
 
 /* =========================
@@ -543,12 +900,20 @@ function renderDates(){
 
 function selectDate(date){
 
-  S.selectedDate = date;
-  S.selectedTime = "";
+  S.selectedDate =
+    date;
+
+
+  S.selectedTime =
+    "";
+
 
   renderDates();
+
   renderTimes();
+
 }
+
 
 
 /* =========================
@@ -557,11 +922,17 @@ function selectDate(date){
 
 function renderTimes(){
 
-  const el = document.getElementById("times");
+  const el =
+    document.getElementById("times");
 
-  if(!el) return;
+
+  if(!el){
+    return;
+  }
+
 
   el.innerHTML = "";
+
 
   if(!S.selectedDate){
 
@@ -569,17 +940,27 @@ function renderTimes(){
       '<div class="empty">اختر التاريخ أولاً</div>';
 
     return;
+
   }
 
-  if(isDayOff(S.selectedDate)){
+
+  if(
+    isDayOff(
+      S.selectedDate
+    )
+  ){
 
     el.innerHTML =
       '<div class="empty">هذا اليوم غير متاح للحجز</div>';
 
     return;
+
   }
 
-  const times = makeTimes();
+
+  const times =
+    makeTimes();
+
 
   if(times.length === 0){
 
@@ -587,41 +968,86 @@ function renderTimes(){
       '<div class="empty">لا توجد أوقات متاحة</div>';
 
     return;
+
   }
 
-  times.forEach(function(time){
 
-    const button = document.createElement("button");
+  times.forEach(
+    function(time){
 
-    button.type = "button";
-    button.className = "time-btn";
+      const button =
+        document.createElement(
+          "button"
+        );
 
-    const isFull = full(S.selectedDate,time);
 
-    if(isFull){
+      button.type =
+        "button";
 
-      button.classList.add("full");
-      button.disabled = true;
-      button.textContent = time + " ممتلئ";
 
-    }else{
+      button.className =
+        "time-btn";
 
-      button.textContent = time;
 
-      if(S.selectedTime === time){
-        button.classList.add("selected");
+      const isFull =
+        full(
+          S.selectedDate,
+          time
+        );
+
+
+      if(isFull){
+
+        button.classList.add(
+          "full"
+        );
+
+
+        button.disabled =
+          true;
+
+
+        button.textContent =
+          time + " ممتلئ";
+
       }
 
-      button.onclick = function(){
-        selectTime(time);
-      };
+      else{
+
+        button.textContent =
+          time;
+
+
+        if(
+          S.selectedTime === time
+        ){
+
+          button.classList.add(
+            "selected"
+          );
+
+        }
+
+
+        button.onclick =
+          function(){
+
+            selectTime(time);
+
+          };
+
+      }
+
+
+      el.appendChild(
+        button
+      );
+
     }
-
-    el.appendChild(button);
-
-  });
+  );
 
 }
+
 
 
 /* =========================
@@ -630,10 +1056,14 @@ function renderTimes(){
 
 function selectTime(time){
 
-  S.selectedTime = time;
+  S.selectedTime =
+    time;
+
 
   renderTimes();
+
 }
+
 
 
 /* =========================
@@ -642,37 +1072,84 @@ function selectTime(time){
 
 function renderHome(){
 
-  document.getElementById("centerName").textContent =
-    S.settings.name || "هيثم للحجامة";
+  const name =
+    document.getElementById(
+      "centerName"
+    );
 
-  document.getElementById("centerArea").textContent =
-    S.settings.area || "أبو سنان";
 
-  const wa = waNum(S.settings.whatsapp);
+  const area =
+    document.getElementById(
+      "centerArea"
+    );
 
-  const link = document.getElementById("whatsappLink");
 
-  if(wa){
+  if(name){
 
-    link.href =
-      "https://wa.me/" + wa;
-
-  }else{
-
-    link.href = "#";
+    name.textContent =
+      S.settings.name ||
+      "هيثم للحجامة";
 
   }
 
+
+  if(area){
+
+    area.textContent =
+      S.settings.area ||
+      "أبو سنان";
+
+  }
+
+
+  const wa =
+    waNum(
+      S.settings.whatsapp
+    );
+
+
+  const link =
+    document.getElementById(
+      "whatsappLink"
+    );
+
+
+  if(link){
+
+    if(wa){
+
+      link.href =
+        "https://wa.me/" + wa;
+
+    }
+
+    else{
+
+      link.href =
+        "#";
+
+    }
+
+  }
+
+
   renderDates();
+
   renderTimes();
+
 }
 
 
-/* =========================
+
+/* ==================================================
    إرسال الحجز
-========================= */
+================================================== */
 
 async function createBooking(){
+
+  /*
+    أول شيء يظهر للمستخدم
+  */
 
   message(
     "جاري إرسال الحجز...",
@@ -681,16 +1158,27 @@ async function createBooking(){
 
 
   const nameEl =
-    document.getElementById("customerName");
+    document.getElementById(
+      "customerName"
+    );
+
 
   const phoneEl =
-    document.getElementById("customerPhone");
+    document.getElementById(
+      "customerPhone"
+    );
+
 
   const notesEl =
-    document.getElementById("customerNotes");
+    document.getElementById(
+      "customerNotes"
+    );
 
 
-  if(!nameEl || !phoneEl){
+  if(
+    !nameEl ||
+    !phoneEl
+  ){
 
     message(
       "تعذر قراءة بيانات الحجز",
@@ -698,18 +1186,26 @@ async function createBooking(){
     );
 
     return;
+
   }
 
 
   const name =
     nameEl.value.trim();
 
+
   const phone =
     phoneEl.value.trim();
 
-  const notes =
-    notesEl ? notesEl.value.trim() : "";
 
+  const notes =
+    notesEl
+      ? notesEl.value.trim()
+      : "";
+
+
+
+  /* الاسم */
 
   if(!name){
 
@@ -719,6 +1215,7 @@ async function createBooking(){
     );
 
     return;
+
   }
 
 
@@ -730,8 +1227,12 @@ async function createBooking(){
     );
 
     return;
+
   }
 
+
+
+  /* الهاتف */
 
   if(!phone){
 
@@ -741,6 +1242,7 @@ async function createBooking(){
     );
 
     return;
+
   }
 
 
@@ -752,8 +1254,12 @@ async function createBooking(){
     );
 
     return;
+
   }
 
+
+
+  /* التاريخ */
 
   if(!S.selectedDate){
 
@@ -763,8 +1269,12 @@ async function createBooking(){
     );
 
     return;
+
   }
 
+
+
+  /* الوقت */
 
   if(!S.selectedTime){
 
@@ -774,10 +1284,18 @@ async function createBooking(){
     );
 
     return;
+
   }
 
 
-  if(isDayOff(S.selectedDate)){
+
+  /* يوم العطلة */
+
+  if(
+    isDayOff(
+      S.selectedDate
+    )
+  ){
 
     message(
       "هذا اليوم غير متاح للحجز",
@@ -785,10 +1303,19 @@ async function createBooking(){
     );
 
     return;
+
   }
 
 
-  if(full(S.selectedDate,S.selectedTime)){
+
+  /* الموعد ممتلئ */
+
+  if(
+    full(
+      S.selectedDate,
+      S.selectedTime
+    )
+  ){
 
     message(
       "عذرًا، هذا الموعد أصبح ممتلئًا",
@@ -796,52 +1323,120 @@ async function createBooking(){
     );
 
     return;
+
   }
+
 
 
   try{
 
-    console.log(
-      "Sending booking to Firebase..."
-    );
-
+    /*
+      البيانات التي سترسل إلى Firestore
+    */
 
     const bookingData = {
 
-      name: name,
+      name:
+        name,
 
-      phone: phone,
+      phone:
+        phone,
 
-      date: S.selectedDate,
+      date:
+        S.selectedDate,
 
-      time: S.selectedTime,
+      time:
+        S.selectedTime,
 
-      notes: notes,
+      notes:
+        notes,
 
-      status: "pending",
+      status:
+        "pending",
 
-      createdAt: Date.now()
+      createdAt:
+        Date.now()
 
     };
 
 
     console.log(
-      "Booking data:",
+      "BOOKING DATA:",
       bookingData
     );
 
 
-    await db
-      .collection("bookings")
-      .add(bookingData);
 
+    /*
+      طلب Firebase
+    */
+
+    const firebaseRequest =
+
+      db
+        .collection("bookings")
+        .add(
+          bookingData
+        );
+
+
+
+    /*
+      مهلة 10 ثوانٍ
+    */
+
+    const timeout =
+
+      new Promise(
+        function(_,reject){
+
+          setTimeout(
+            function(){
+
+              reject(
+
+                new Error(
+                  "انتهت مهلة الاتصال بـ Firebase بعد 10 ثوانٍ"
+                )
+
+              );
+
+            },
+            10000
+          );
+
+        }
+      );
+
+
+
+    /*
+      ننتظر Firebase أو انتهاء المهلة
+    */
+
+    await Promise.race([
+
+      firebaseRequest,
+
+      timeout
+
+    ]);
+
+
+
+    /*
+      إذا وصلنا هنا
+      فالحجز تم حفظه
+    */
 
     console.log(
-      "Booking successfully added."
+      "BOOKING SAVED SUCCESSFULLY"
     );
 
 
-    S.selectedTime = "";
+    S.selectedTime =
+      "";
+
 
     renderHome();
 
@@ -852,7 +1447,10 @@ async function createBooking(){
     );
 
 
-  }catch(error){
+
+  }
+
+  catch(error){
 
     console.error(
       "CREATE BOOKING ERROR:",
@@ -860,12 +1458,22 @@ async function createBooking(){
     );
 
 
+    /*
+      إظهار الخطأ الحقيقي
+    */
+
     message(
+
       "خطأ Firebase: " +
-      (error.message ||
-       error.code ||
-       "خطأ غير معروف"),
+
+      (
+        error.message ||
+        error.code ||
+        "خطأ غير معروف"
+      ),
+
       "error"
+
     );
 
   }
@@ -873,11 +1481,13 @@ async function createBooking(){
 }
 
 
+
 /* =========================
-   قراءة الإعدادات
+   قراءة إعدادات المركز
 ========================= */
 
-db.collection("settings")
+db
+  .collection("settings")
   .doc("main")
   .onSnapshot(
 
@@ -885,7 +1495,9 @@ db.collection("settings")
 
       if(doc.exists){
 
-        const data = doc.data();
+        const data =
+          doc.data();
+
 
         S.settings = {
 
@@ -897,9 +1509,11 @@ db.collection("settings")
 
       }
 
+
       renderHome();
 
     },
+
 
     function(error){
 
@@ -913,11 +1527,13 @@ db.collection("settings")
   );
 
 
+
 /* =========================
    قراءة التوافر
 ========================= */
 
-db.collection("settings")
+db
+  .collection("settings")
   .doc("availability")
   .onSnapshot(
 
@@ -928,15 +1544,19 @@ db.collection("settings")
         S.availability =
           doc.data() || {};
 
-      }else{
+      }
 
-        S.availability = {};
+      else{
+
+        S.availability =
+          {};
 
       }
 
+
       /*
-        لا نعيد رسم الصفحة أثناء كتابة
-        بيانات العميل.
+        تحديث الأوقات فقط
+        حتى لا تختفي بيانات العميل
       */
 
       if(
@@ -950,6 +1570,7 @@ db.collection("settings")
 
     },
 
+
     function(error){
 
       console.error(
@@ -962,11 +1583,13 @@ db.collection("settings")
   );
 
 
+
 /* =========================
-   التشغيل الأول
+   التشغيل
 ========================= */
 
 renderHome();
+
 
 </script>
 
