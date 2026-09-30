@@ -162,6 +162,34 @@ textarea{
 }
 
 
+/* FIREBASE TEST */
+
+#directTest{
+  display:none;
+  white-space:pre-wrap;
+  direction:ltr;
+  text-align:left;
+  background:#eee;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:10px;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.firebase-test-btn{
+  width:100%;
+  padding:14px;
+  margin-bottom:15px;
+  border:0;
+  border-radius:10px;
+  background:#444;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+
 /* BOOKING MODAL */
 
 .booking-modal{
@@ -258,6 +286,23 @@ textarea{
 
 
 <div class="container">
+
+
+  <!-- DIRECT FIRESTORE TEST -->
+
+  <div
+    id="directTest"
+  ></div>
+
+
+  <button
+    type="button"
+    class="firebase-test-btn"
+    onclick="testDirectFirestore()"
+  >
+    اختبار اتصال Firebase
+  </button>
+
 
   <div id="message" class="message"></div>
 
@@ -383,8 +428,6 @@ const db =
   firebase.firestore();
 
 
-/* FIRESTORE CONNECTION TEST */
-
 console.log(
   "FIRESTORE READY"
 );
@@ -392,6 +435,74 @@ console.log(
 
 const auth =
   firebase.auth();
+
+
+
+/* DIRECT FIRESTORE CONNECTION TEST */
+
+async function testDirectFirestore(){
+
+  const resultBox =
+    document.getElementById("directTest");
+
+  resultBox.style.display =
+    "block";
+
+  resultBox.textContent =
+    "اختبار الاتصال المباشر بـ Firestore...";
+
+
+  const url =
+    "https://firestore.googleapis.com/v1/projects/haetham-80b2a/databases/(default)/documents/settings/main?key=" +
+    encodeURIComponent(firebaseConfig.apiKey);
+
+
+  try{
+
+    const response =
+      await fetch(url);
+
+
+    const text =
+      await response.text();
+
+
+    console.log(
+      "DIRECT FIRESTORE STATUS:",
+      response.status
+    );
+
+
+    console.log(
+      "DIRECT FIRESTORE RESPONSE:",
+      text
+    );
+
+
+    resultBox.textContent =
+      "HTTP " +
+      response.status +
+      "\n\n" +
+      text;
+
+
+  }
+
+  catch(error){
+
+    console.error(
+      "DIRECT FIRESTORE ERROR:",
+      error
+    );
+
+
+    resultBox.textContent =
+      "FETCH ERROR:\n" +
+      error.message;
+
+  }
+
+}
 
 
 
@@ -403,14 +514,23 @@ const S = {
   selectedTime:"",
 
   settings:{
+
     name:"هيثم للحجامة",
+
     area:"أبو سنان",
+
     whatsapp:"",
+
     start:"10:00",
+
     end:"22:00",
+
     slot:60,
+
     capacity:2,
+
     daysOff:[]
+
   },
 
   availability:{}
@@ -428,10 +548,12 @@ function message(text,type){
 
   if(!el) return;
 
-  el.textContent = text;
+  el.textContent =
+    text;
 
   el.className =
-    "message show " + (type || "info");
+    "message show " +
+    (type || "info");
 
 }
 
@@ -453,6 +575,7 @@ function showBookingModal(){
   const text =
     document.getElementById("bookingModalText");
 
+
   spinner.style.display =
     "block";
 
@@ -461,6 +584,7 @@ function showBookingModal(){
 
   text.textContent =
     "يرجى الانتظار";
+
 
   modal.classList.add("show");
 
@@ -488,6 +612,7 @@ function bookingSuccess(){
   const text =
     document.getElementById("bookingModalText");
 
+
   spinner.style.display =
     "none";
 
@@ -511,6 +636,7 @@ function bookingError(errorText){
   const text =
     document.getElementById("bookingModalText");
 
+
   spinner.style.display =
     "none";
 
@@ -531,11 +657,14 @@ function bookingError(errorText){
 function toEn(value){
 
   return String(value)
-    .replace(/[٠-٩]/g,function(d){
+    .replace(
+      /[٠-٩]/g,
+      function(d){
 
-      return "٠١٢٣٤٥٦٧٨٩".indexOf(d);
+        return "٠١٢٣٤٥٦٧٨٩".indexOf(d);
 
-    });
+      }
+    );
 
 }
 
@@ -549,12 +678,14 @@ function waNum(p){
     toEn(p)
     .replace(/\D/g,'');
 
+
   if(d.startsWith("00")){
 
     d =
       d.slice(2);
 
   }
+
 
   if(/^0\d{8,9}$/.test(d)){
 
@@ -563,12 +694,14 @@ function waNum(p){
 
   }
 
+
   if(/^9720\d{8,9}$/.test(d)){
 
     d =
       "972" + d.slice(4);
 
   }
+
 
   return d;
 
@@ -596,18 +729,23 @@ function full(date,time){
   const key =
     date + "_" + time;
 
+
   const item =
     S.availability[key];
 
+
   if(!item) return false;
+
 
   const taken =
     Number(item.taken || 0);
+
 
   const capacity =
     Number(
       S.settings.capacity || 2
     );
+
 
   return taken >= capacity;
 
@@ -619,7 +757,8 @@ function full(date,time){
 
 function pad(n){
 
-  return String(n).padStart(2,"0");
+  return String(n)
+    .padStart(2,"0");
 
 }
 
@@ -627,11 +766,17 @@ function pad(n){
 function dateKey(date){
 
   return (
+
     date.getFullYear() +
+
     "-" +
+
     pad(date.getMonth()+1) +
+
     "-" +
+
     pad(date.getDate())
+
   );
 
 }
@@ -648,6 +793,7 @@ function renderHome(){
   const area =
     document.getElementById("centerArea");
 
+
   if(name){
 
     name.textContent =
@@ -655,6 +801,7 @@ function renderHome(){
       "هيثم للحجامة";
 
   }
+
 
   if(area){
 
@@ -680,41 +827,54 @@ function renderDates(){
   const container =
     document.getElementById("dates");
 
+
   if(!container) return;
+
 
   container.innerHTML = "";
 
+
   const today =
     new Date();
+
 
   for(let i=0;i<21;i++){
 
     const d =
       new Date(today);
 
+
     d.setDate(
       today.getDate()+i
     );
 
+
     const key =
       dateKey(d);
+
 
     const btn =
       document.createElement("button");
 
+
     btn.className =
       "date-btn" +
+
       (
         S.selectedDate === key
         ? " active"
         : ""
       );
 
+
     const day =
       d.toLocaleDateString(
         "ar",
-        {weekday:"short"}
+        {
+          weekday:"short"
+        }
       );
+
 
     const date =
       d.toLocaleDateString(
@@ -725,11 +885,13 @@ function renderDates(){
         }
       );
 
+
     btn.innerHTML =
       "<strong>" +
       day +
       "</strong><br>" +
       date;
+
 
     btn.onclick =
       function(){
@@ -737,6 +899,7 @@ function renderDates(){
         selectDate(key);
 
       };
+
 
     container.appendChild(btn);
 
@@ -753,8 +916,10 @@ function selectDate(date){
   S.selectedDate =
     date;
 
+
   S.selectedTime =
     "";
+
 
   renderDates();
 
@@ -771,7 +936,9 @@ function renderTimes(){
   const container =
     document.getElementById("times");
 
+
   if(!container) return;
+
 
   container.innerHTML = "";
 
@@ -786,13 +953,25 @@ function renderTimes(){
   }
 
 
+  if(isDayOff(S.selectedDate)){
+
+    container.innerHTML =
+      "<div>هذا اليوم غير متاح للحجز</div>";
+
+    return;
+
+  }
+
+
   const start =
     S.settings.start ||
     "10:00";
 
+
   const end =
     S.settings.end ||
     "22:00";
+
 
   const slot =
     Number(
@@ -803,8 +982,10 @@ function renderTimes(){
   let parts =
     start.split(":");
 
+
   let h =
     Number(parts[0]);
+
 
   let m =
     Number(parts[1]);
@@ -812,6 +993,7 @@ function renderTimes(){
 
   const endParts =
     end.split(":");
+
 
   const endMinutes =
     Number(endParts[0])*60 +
@@ -823,10 +1005,14 @@ function renderTimes(){
   ){
 
     const time =
-      pad(h) + ":" + pad(m);
+      pad(h) +
+      ":" +
+      pad(m);
+
 
     const btn =
       document.createElement("button");
+
 
     const isFull =
       full(
@@ -834,23 +1020,28 @@ function renderTimes(){
         time
       );
 
+
     btn.className =
       "time-btn" +
+
       (
         S.selectedTime === time
         ? " active"
         : ""
       ) +
+
       (
         isFull
         ? " full"
         : ""
       );
 
+
     btn.textContent =
       isFull
       ? time + " ممتلئ"
       : time;
+
 
     if(!isFull){
 
@@ -861,19 +1052,26 @@ function renderTimes(){
 
         };
 
-    }else{
+    }
+
+    else{
 
       btn.disabled = true;
 
     }
 
+
     container.appendChild(btn);
+
 
     m += slot;
 
+
     if(m >= 60){
 
-      h += Math.floor(m/60);
+      h +=
+        Math.floor(m/60);
+
 
       m =
         m % 60;
@@ -893,6 +1091,7 @@ function selectTime(time){
   S.selectedTime =
     time;
 
+
   renderTimes();
 
 }
@@ -908,10 +1107,12 @@ async function createBooking(){
       "customerName"
     );
 
+
   const phoneEl =
     document.getElementById(
       "customerPhone"
     );
+
 
   const notesEl =
     document.getElementById(
@@ -936,8 +1137,10 @@ async function createBooking(){
   const name =
     nameEl.value.trim();
 
+
   const phone =
     phoneEl.value.trim();
+
 
   const notes =
     notesEl
@@ -1031,6 +1234,7 @@ async function createBooking(){
           .collection("bookings")
           .add(bookingData),
 
+
         new Promise(
           function(_,reject){
 
@@ -1080,6 +1284,7 @@ async function createBooking(){
 
   }
 
+
   catch(error){
 
     console.error(
@@ -1091,6 +1296,7 @@ async function createBooking(){
     bookingError(
 
       "النتيجة: " +
+
       (
         error.message ||
         error.code ||
@@ -1119,6 +1325,7 @@ db
         const data =
           doc.data();
 
+
         S.settings = {
 
           ...S.settings,
@@ -1137,6 +1344,7 @@ db
       }
 
     },
+
 
     function(error){
 
@@ -1185,6 +1393,7 @@ db
       }
 
     },
+
 
     function(error){
 
