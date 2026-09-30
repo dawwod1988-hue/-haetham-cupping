@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 
 <meta name="viewport"
-      content="width=device-width,initial-scale=1,viewport-fit=cover">
+content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <title>هيثم للحجامة – أبو سنان</title>
 
@@ -18,15 +18,12 @@
 
 body{
   margin:0;
-  font-family:Arial,"Tahoma",sans-serif;
+  font-family:Arial,Tahoma,sans-serif;
   background:#f4f6f8;
   color:#1f2937;
 }
 
-button,
-input,
-  
-textarea{
+button,input,textarea,select{
   font-family:inherit;
 }
 
@@ -344,29 +341,19 @@ hr{
 
 </style>
 
-
-<!-- Firebase -->
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
 
 </head>
 
-
 <body>
-
 
 <div id="app"></div>
 
 <div id="message" class="message"></div>
 
-
 <script>
-
 
 /* =========================
    FIREBASE
@@ -389,7 +376,6 @@ const firebaseConfig = {
   measurementId:"G-SSQSPWN5EX"
 
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
@@ -440,7 +426,6 @@ const S={
 
 };
 
-
 const app=document.getElementById("app");
 
 
@@ -459,7 +444,6 @@ function esc(value){
 
 }
 
-
 function toEn(value){
 
   return String(value??"")
@@ -467,7 +451,6 @@ function toEn(value){
     .replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
 
 }
-
 
 function waNum(phone){
 
@@ -489,7 +472,6 @@ function waNum(phone){
 
 }
 
-
 function waLink(phone,text=""){
 
   const n=waNum(phone);
@@ -501,15 +483,11 @@ function waLink(phone,text=""){
 
 }
 
-
 function today(){
 
-  const d=new Date();
-
-  return localDate(d);
+  return localDate(new Date());
 
 }
-
 
 function localDate(d){
 
@@ -523,7 +501,6 @@ function localDate(d){
 
 }
 
-
 function dateObj(date){
 
   const p=date.split("-").map(Number);
@@ -531,7 +508,6 @@ function dateObj(date){
   return new Date(p[0],p[1]-1,p[2]);
 
 }
-
 
 function addDays(date,n){
 
@@ -543,14 +519,11 @@ function addDays(date,n){
 
 }
 
-
 function formatDate(date){
 
   if(!date) return "";
 
-  const d=dateObj(date);
-
-  return d.toLocaleDateString("ar-SA",{
+  return dateObj(date).toLocaleDateString("ar-SA",{
 
     weekday:"long",
 
@@ -564,12 +537,9 @@ function formatDate(date){
 
 }
 
-
 function shortDay(date){
 
-  const d=dateObj(date);
-
-  return d.toLocaleDateString("ar-SA",{
+  return dateObj(date).toLocaleDateString("ar-SA",{
 
     weekday:"short"
 
@@ -577,19 +547,15 @@ function shortDay(date){
 
 }
 
-
 function monthName(date){
 
-  const d=dateObj(date);
-
-  return d.toLocaleDateString("ar-SA",{
+  return dateObj(date).toLocaleDateString("ar-SA",{
 
     month:"short"
 
   });
 
 }
-
 
 function timeToMinutes(t){
 
@@ -598,7 +564,6 @@ function timeToMinutes(t){
   return p[0]*60+p[1];
 
 }
-
 
 function minutesToTime(m){
 
@@ -611,12 +576,15 @@ function minutesToTime(m){
 
 }
 
-
 function times(){
 
-  const start=timeToMinutes(S.settings.start||"10:00");
+  const start=timeToMinutes(
+    S.settings.start||"10:00"
+  );
 
-  const end=timeToMinutes(S.settings.end||"22:00");
+  const end=timeToMinutes(
+    S.settings.end||"22:00"
+  );
 
   const slot=Number(S.settings.slot)||60;
 
@@ -632,13 +600,11 @@ function times(){
 
 }
 
-
 function isDayOff(date){
 
   return (S.settings.daysOff||[]).includes(date);
 
 }
-
 
 function full(date,time){
 
@@ -655,7 +621,6 @@ function full(date,time){
   return taken>=capacity;
 
 }
-
 
 function message(text,type="info"){
 
@@ -686,9 +651,13 @@ function header(){
 
     <div class="header">
 
-      <h1>${esc(S.settings.name||"هيثم للحجامة")}</h1>
+      <h1>
+        ${esc(S.settings.name||"هيثم للحجامة")}
+      </h1>
 
-      <p>${esc(S.settings.area||"أبو سنان")}</p>
+      <p>
+        ${esc(S.settings.area||"أبو سنان")}
+      </p>
 
     </div>
 
@@ -717,24 +686,22 @@ function renderHome(){
 
   }
 
-
   app.innerHTML=`
 
     <div class="container">
 
       ${header()}
 
-
       <div class="card">
 
         <h2>حجز موعد</h2>
 
-        <div class="small" style="margin-bottom:12px">
+        <div class="small"
+             style="margin-bottom:12px">
 
           اختر اليوم
 
         </div>
-
 
         <div class="date-list">
 
@@ -743,7 +710,7 @@ function renderHome(){
             <div
 
               class="date-item ${
-                S.selectedDate===d ? "active" : ""
+                S.selectedDate===d?"active":""
               }"
 
               onclick="selectDate('${d}')"
@@ -751,21 +718,15 @@ function renderHome(){
             >
 
               <div class="date-day">
-
                 ${esc(shortDay(d))}
-
               </div>
 
               <div class="date-number">
-
                 ${dateObj(d).getDate()}
-
               </div>
 
               <div class="date-day">
-
                 ${esc(monthName(d))}
-
               </div>
 
             </div>
@@ -781,21 +742,14 @@ function renderHome(){
 
         <h2>اختر الوقت</h2>
 
-
         ${
           isDayOff(S.selectedDate)
 
           ?
 
-          `
-
-          <div class="empty">
-
+          `<div class="empty">
             هذا اليوم غير متاح للحجز
-
-          </div>
-
-          `
+          </div>`
 
           :
 
@@ -805,22 +759,20 @@ function renderHome(){
 
             ${times().map(t=>{
 
-              const isFull=full(
-                S.selectedDate,
-                t
-              );
+              const isFull=
+                full(S.selectedDate,t);
 
               return `
 
                 <button
 
                   class="time-btn ${
-                    S.selectedTime===t ? "active" : ""
+                    S.selectedTime===t?"active":""
                   } ${
-                    isFull ? "disabled" : ""
+                    isFull?"disabled":""
                   }"
 
-                  ${isFull ? "disabled" : ""}
+                  ${isFull?"disabled":""}
 
                   onclick="selectTime('${t}')"
 
@@ -847,7 +799,6 @@ function renderHome(){
           </div>
 
           `
-
         }
 
       </div>
@@ -864,80 +815,59 @@ function renderHome(){
 
           <h2>بيانات الحجز</h2>
 
-
           <div class="small"
                style="margin-bottom:15px">
 
             ${esc(formatDate(S.selectedDate))}
-
             —
-
             ${esc(S.selectedTime)}
 
           </div>
-
 
           <div class="field">
 
             <label>الاسم</label>
 
             <input
-
               id="customerName"
-
               maxlength="80"
-
               placeholder="اكتب اسمك"
-
+              autocomplete="name"
             >
 
           </div>
-
 
           <div class="field">
 
             <label>رقم الهاتف</label>
 
             <input
-
               id="customerPhone"
-
               type="tel"
-
               inputmode="tel"
-
               maxlength="20"
-
               placeholder="05XXXXXXXX"
-
+              autocomplete="tel"
             >
 
           </div>
-
 
           <div class="field">
 
             <label>ملاحظات</label>
 
             <textarea
-
               id="customerNotes"
-
               maxlength="300"
-
               placeholder="أي ملاحظة"
-
             ></textarea>
 
           </div>
 
-
           <button
-
             class="btn btn-primary"
-
             onclick="createBooking()"
-
+            type="button"
           >
 
             إرسال طلب الحجز
@@ -965,7 +895,6 @@ function renderHome(){
 
         </p>
 
-
         ${
           S.settings.whatsapp
 
@@ -974,16 +903,15 @@ function renderHome(){
           `
 
           <a
-
             href="${waLink(S.settings.whatsapp)}"
-
             target="_blank"
-
             style="text-decoration:none"
-
           >
 
-            <button class="btn btn-success">
+            <button
+              class="btn btn-success"
+              type="button"
+            >
 
               التواصل عبر واتساب
 
@@ -1005,13 +933,10 @@ function renderHome(){
       <div style="text-align:center">
 
         <button
-
           class="btn btn-secondary"
-
           style="width:auto"
-
           onclick="showLogin()"
-
+          type="button"
         >
 
           دخول الإدارة
@@ -1028,7 +953,7 @@ function renderHome(){
 
 
 /* =========================
-   SELECT DATE
+   DATE
 ========================= */
 
 function selectDate(date){
@@ -1043,7 +968,7 @@ function selectDate(date){
 
 
 /* =========================
-   SELECT TIME
+   TIME
 ========================= */
 
 function selectTime(time){
@@ -1082,11 +1007,23 @@ async function createBooking(){
     document.getElementById("customerNotes");
 
 
+  if(!nameEl || !phoneEl){
+
+    message(
+      "تعذر قراءة بيانات الحجز",
+      "error"
+    );
+
+    return;
+
+  }
+
+
   const name=
-    nameEl ? nameEl.value.trim() : "";
+    nameEl.value.trim();
 
   const phone=
-    phoneEl ? phoneEl.value.trim() : "";
+    phoneEl.value.trim();
 
   const notes=
     notesEl ? notesEl.value.trim() : "";
@@ -1171,8 +1108,6 @@ async function createBooking(){
       "error"
     );
 
-    renderHome();
-
     return;
 
   }
@@ -1201,25 +1136,22 @@ async function createBooking(){
       });
 
 
+    S.selectedTime="";
+
+    renderHome();
+
     message(
       "تم إرسال طلب الحجز بنجاح ✅",
       "success"
     );
 
 
-    S.selectedTime="";
-
-
-    setTimeout(()=>{
-
-      renderHome();
-
-    },1000);
-
-
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "CREATE BOOKING ERROR:",
+      error
+    );
 
     message(
       "حدث خطأ أثناء إرسال الحجز",
@@ -1247,60 +1179,44 @@ function showLogin(){
 
         <h2>دخول الإدارة</h2>
 
-
         <div class="field">
 
           <label>البريد الإلكتروني</label>
 
           <input
-
             id="loginEmail"
-
             type="email"
-
             placeholder="البريد الإلكتروني"
-
           >
 
         </div>
-
 
         <div class="field">
 
           <label>كلمة المرور</label>
 
           <input
-
             id="loginPassword"
-
             type="password"
-
             placeholder="كلمة المرور"
-
           >
 
         </div>
 
-
         <button
-
           class="btn btn-primary"
-
           onclick="login()"
-
+          type="button"
         >
 
           دخول
 
         </button>
 
-
         <button
-
           class="btn btn-secondary"
-
           onclick="renderHome()"
-
+          type="button"
         >
 
           العودة
@@ -1392,7 +1308,6 @@ function renderAdmin(){
 
       ${header()}
 
-
       <div class="card">
 
         <h2>لوحة الإدارة</h2>
@@ -1405,47 +1320,35 @@ function renderAdmin(){
 
       </div>
 
-
       <div class="tabs">
 
         <button
-
           class="tab ${
-            S.adminTab==="bookings" ? "active" : ""
+            S.adminTab==="bookings"?"active":""
           }"
-
           onclick="setAdminTab('bookings')"
-
         >
 
           الحجوزات
 
         </button>
 
-
         <button
-
           class="tab ${
-            S.adminTab==="manual" ? "active" : ""
+            S.adminTab==="manual"?"active":""
           }"
-
           onclick="setAdminTab('manual')"
-
         >
 
           حجز يدوي
 
         </button>
 
-
         <button
-
           class="tab ${
-            S.adminTab==="settings" ? "active" : ""
+            S.adminTab==="settings"?"active":""
           }"
-
           onclick="setAdminTab('settings')"
-
         >
 
           الإعدادات
@@ -1454,18 +1357,13 @@ function renderAdmin(){
 
       </div>
 
-
       <div id="adminContent"></div>
-
 
       <div class="logout">
 
         <button
-
           class="btn btn-secondary"
-
           onclick="logout()"
-
         >
 
           تسجيل الخروج
@@ -1477,7 +1375,6 @@ function renderAdmin(){
     </div>
 
   `;
-
 
   renderAdminContent();
 
@@ -1529,16 +1426,14 @@ function renderAdminContent(){
 function renderBookings(el){
 
   const bookings=
-    [...S.bookings]
-      .sort((a,b)=>{
+    [...S.bookings].sort((a,b)=>{
 
-        const da=(a.date+" "+a.time);
+      return (a.date+" "+a.time)
+        .localeCompare(
+          b.date+" "+b.time
+        );
 
-        const db=(b.date+" "+b.time);
-
-        return da.localeCompare(db);
-
-      });
+    });
 
 
   if(!bookings.length){
@@ -1568,9 +1463,7 @@ function renderBookings(el){
 
       <h2>الحجوزات</h2>
 
-      ${
-        bookings.map(b=>bookingHTML(b)).join("")
-      }
+      ${bookings.map(b=>bookingHTML(b)).join("")}
 
     </div>
 
@@ -1616,7 +1509,6 @@ function bookingHTML(b){
 
       </div>
 
-
       <div class="booking-info">
 
         📅 ${esc(formatDate(b.date))}
@@ -1639,16 +1531,13 @@ function bookingHTML(b){
 
       </div>
 
-
       <div class="status ${esc(b.status)}">
 
         ${esc(statusText(b.status))}
 
       </div>
 
-
       <div class="actions">
-
 
         ${
           b.status==="pending"
@@ -1658,24 +1547,17 @@ function bookingHTML(b){
           `
 
           <button
-
             class="btn btn-success"
-
             onclick="changeStatus('${b.id}','confirmed')"
-
           >
 
             قبول
 
           </button>
 
-
           <button
-
             class="btn btn-danger"
-
             onclick="changeStatus('${b.id}','rejected')"
-
           >
 
             رفض
@@ -1690,7 +1572,6 @@ function bookingHTML(b){
 
         }
 
-
         ${
           b.status==="confirmed"
 
@@ -1699,24 +1580,17 @@ function bookingHTML(b){
           `
 
           <button
-
             class="btn btn-primary"
-
             onclick="changeStatus('${b.id}','done')"
-
           >
 
             تم الموعد
 
           </button>
 
-
           <button
-
             class="btn btn-warning"
-
             onclick="changeStatus('${b.id}','cancelled')"
-
           >
 
             إلغاء
@@ -1731,7 +1605,6 @@ function bookingHTML(b){
 
         }
 
-
         ${
           b.status==="done"
 
@@ -1740,11 +1613,8 @@ function bookingHTML(b){
           `
 
           <button
-
             class="btn btn-primary"
-
             onclick="changeStatus('${b.id}','confirmed')"
-
           >
 
             إعادة تأكيد
@@ -1759,15 +1629,10 @@ function bookingHTML(b){
 
         }
 
-
         <a
-
           href="${waLink(b.phone,msg)}"
-
           target="_blank"
-
           style="text-decoration:none"
-
         >
 
           <button class="btn btn-success">
@@ -1778,7 +1643,6 @@ function bookingHTML(b){
 
         </a>
 
-
         ${
           b.status==="confirmed"
 
@@ -1787,11 +1651,8 @@ function bookingHTML(b){
           `
 
           <button
-
             class="btn btn-secondary"
-
             onclick="addToGoogleCalendar('${b.id}')"
-
           >
 
             Google Calendar
@@ -1806,19 +1667,14 @@ function bookingHTML(b){
 
         }
 
-
         <button
-
           class="btn btn-danger"
-
           onclick="deleteBooking('${b.id}')"
-
         >
 
           حذف
 
         </button>
-
 
       </div>
 
@@ -1830,7 +1686,7 @@ function bookingHTML(b){
 
 
 /* =========================
-   CHANGE STATUS
+   STATUS
 ========================= */
 
 async function changeStatus(id,status){
@@ -1920,7 +1776,7 @@ function addToGoogleCalendar(id){
   if(!b) return;
 
 
-  const startDate=
+  const start=
     b.date.replace(/-/g,"")+
     "T"+
     b.time.replace(":","")+"00";
@@ -1935,7 +1791,7 @@ function addToGoogleCalendar(id){
     minutesToTime(endMinutes);
 
 
-  const endDate=
+  const end=
     b.date.replace(/-/g,"")+
     "T"+
     endTime.replace(":","")+"00";
@@ -1943,8 +1799,10 @@ function addToGoogleCalendar(id){
 
   const url=
     "https://calendar.google.com/calendar/render?action=TEMPLATE"+
-    "&text="+encodeURIComponent("جلسة حجامة - "+b.name)+
-    "&dates="+startDate+"/"+endDate+
+    "&text="+encodeURIComponent(
+      "جلسة حجامة - "+b.name
+    )+
+    "&dates="+start+"/"+end+
     "&details="+encodeURIComponent(
       "جلسة حجامة\nرقم الهاتف: "+b.phone
     )+
@@ -1977,86 +1835,60 @@ function renderManual(el){
 
       <h2>حجز يدوي</h2>
 
-
       <div class="field">
 
         <label>التاريخ</label>
 
         <input
-
           id="manualDate"
-
           type="date"
-
           value="${S.selectedDate}"
-
           min="${today()}"
-
           onchange="renderManualSlots()"
-
         >
 
       </div>
 
-
       <div id="manualSlots"></div>
-
 
       <div class="field">
 
         <label>اسم العميل</label>
 
         <input
-
           id="manualName"
-
           maxlength="80"
-
           placeholder="اسم العميل"
-
         >
 
       </div>
-
 
       <div class="field">
 
         <label>رقم الهاتف</label>
 
         <input
-
           id="manualPhone"
-
           maxlength="20"
-
           placeholder="05XXXXXXXX"
-
         >
 
       </div>
-
 
       <div class="field">
 
         <label>ملاحظات</label>
 
         <textarea
-
           id="manualNotes"
-
           maxlength="300"
-
         ></textarea>
 
       </div>
 
-
       <button
-
         class="btn btn-primary"
-
         onclick="createManualBooking()"
-
       >
 
         حفظ الحجز
@@ -2122,16 +1954,13 @@ function renderManualSlots(){
         ${times().map(t=>`
 
           <option
-
             value="${t}"
-
-            ${full(date,t) ? "disabled" : ""}
-
+            ${full(date,t)?"disabled":""}
           >
 
             ${t}
 
-            ${full(date,t) ? " - ممتلئ" : ""}
+            ${full(date,t)?" - ممتلئ":""}
 
           </option>
 
@@ -2236,53 +2065,39 @@ function renderSettings(el){
 
       <h2>إعدادات المركز</h2>
 
-
       <div class="field">
 
         <label>اسم المركز</label>
 
         <input
-
           id="setName"
-
           value="${esc(S.settings.name)}"
-
         >
 
       </div>
-
 
       <div class="field">
 
         <label>المنطقة</label>
 
         <input
-
           id="setArea"
-
           value="${esc(S.settings.area)}"
-
         >
 
       </div>
-
 
       <div class="field">
 
         <label>واتساب</label>
 
         <input
-
           id="setWhatsApp"
-
           value="${esc(S.settings.whatsapp)}"
-
           placeholder="05XXXXXXXX"
-
         >
 
       </div>
-
 
       <div class="row">
 
@@ -2291,36 +2106,26 @@ function renderSettings(el){
           <label>بداية العمل</label>
 
           <input
-
             id="setStart"
-
             type="time"
-
             value="${esc(S.settings.start)}"
-
           >
 
         </div>
-
 
         <div class="field">
 
           <label>نهاية العمل</label>
 
           <input
-
             id="setEnd"
-
             type="time"
-
             value="${esc(S.settings.end)}"
-
           >
 
         </div>
 
       </div>
-
 
       <div class="row">
 
@@ -2329,45 +2134,31 @@ function renderSettings(el){
           <label>مدة الموعد بالدقائق</label>
 
           <input
-
             id="setSlot"
-
             type="number"
-
             value="${Number(S.settings.slot)||60}"
-
           >
 
         </div>
-
 
         <div class="field">
 
           <label>عدد الأشخاص لكل موعد</label>
 
           <input
-
             id="setCapacity"
-
             type="number"
-
             min="1"
-
             value="${Number(S.settings.capacity)||2}"
-
           >
 
         </div>
 
       </div>
 
-
       <button
-
         class="btn btn-primary"
-
         onclick="saveSettings()"
-
       >
 
         حفظ الإعدادات
@@ -2381,37 +2172,26 @@ function renderSettings(el){
 
       <h2>الأيام غير المتاحة</h2>
 
-
       <div class="field">
 
         <input
-
           id="dayOff"
-
           type="date"
-
           min="${today()}"
-
         >
 
       </div>
 
-
       <button
-
         class="btn btn-secondary"
-
         onclick="addDayOff()"
-
       >
 
         إضافة يوم غير متاح
 
       </button>
 
-
       <hr>
-
 
       ${
         (S.settings.daysOff||[]).length
@@ -2425,11 +2205,8 @@ function renderSettings(el){
             ${esc(formatDate(d))}
 
             <button
-
               class="btn btn-danger"
-
               onclick="removeDayOff('${d}')"
-
             >
 
               حذف
@@ -2443,9 +2220,7 @@ function renderSettings(el){
         :
 
         `<div class="empty">
-
           لا توجد أيام غير متاحة
-
         </div>`
 
       }
@@ -2456,10 +2231,6 @@ function renderSettings(el){
 
 }
 
-
-/* =========================
-   SAVE SETTINGS
-========================= */
 
 async function saveSettings(){
 
@@ -2481,10 +2252,14 @@ async function saveSettings(){
       document.getElementById("setEnd").value,
 
     slot:
-      Number(document.getElementById("setSlot").value)||60,
+      Number(
+        document.getElementById("setSlot").value
+      )||60,
 
     capacity:
-      Number(document.getElementById("setCapacity").value)||2,
+      Number(
+        document.getElementById("setCapacity").value
+      )||2,
 
     daysOff:
       S.settings.daysOff||[]
@@ -2527,6 +2302,7 @@ async function addDayOff(){
 
   const date=
     document.getElementById("dayOff").value;
+
 
   if(!date){
 
@@ -2643,11 +2419,21 @@ db.collection("settings")
       }
 
 
-      if(S.view==="home"){
+      /*
+       لا نعيد رسم الصفحة إذا كان
+       المستخدم قد اختار وقتًا وبدأ
+       بإدخال بيانات الحجز.
+      */
+
+      if(
+        S.view==="home" &&
+        !S.selectedTime
+      ){
 
         renderHome();
 
       }
+
 
       if(S.view==="admin"){
 
@@ -2683,7 +2469,15 @@ db.collection("settings")
         doc.exists ? doc.data() : {};
 
 
-      if(S.view==="home"){
+      /*
+       لا نمسح بيانات العميل
+       أثناء تعبئة نموذج الحجز.
+      */
+
+      if(
+        S.view==="home" &&
+        !S.selectedTime
+      ){
 
         renderHome();
 
@@ -2742,11 +2536,6 @@ function listenBookings(){
           error
         );
 
-        message(
-          "تعذر تحميل الحجوزات",
-          "error"
-        );
-
       }
 
     );
@@ -2755,7 +2544,7 @@ function listenBookings(){
 
 
 /* =========================
-   SYNC AVAILABILITY
+   AVAILABILITY SYNC
 ========================= */
 
 async function syncAvailability(){
@@ -2822,7 +2611,7 @@ async function syncAvailability(){
 
 
 /* =========================
-   AUTH STATE
+   AUTH
 ========================= */
 
 auth.onAuthStateChanged(user=>{
@@ -2856,7 +2645,6 @@ auth.onAuthStateChanged(user=>{
 ========================= */
 
 renderHome();
-
 
 </script>
 
