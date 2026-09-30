@@ -2,14 +2,342 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>هيثم للحجامة – أبو سنان</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#f5f7f6;
+  color:#26332f;
+  font-family:"IBM Plex Sans Arabic",Arial,sans-serif;
+}
+
+button,input,textarea,select{font-family:inherit}
+
+button{cursor:pointer}
+
+#app{min-height:100vh}
+
+.container{
+  width:min(100%,900px);
+  margin:auto;
+  padding:18px 14px 50px;
+}
+
+.header{
+  background:white;
+  border-radius:22px;
+  padding:24px 18px;
+  margin-bottom:16px;
+  text-align:center;
+  box-shadow:0 4px 18px rgba(0,0,0,.06);
+}
+
+.logo{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:#244c42;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 12px;
+  font-size:28px;
+  font-weight:700;
+}
+
+h1{margin:0;font-size:25px}
+h2{margin:0 0 15px;font-size:19px}
+
+.subtitle{
+  margin-top:6px;
+  color:#6b7773;
+}
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
+}
+
+.field{margin-bottom:14px}
+
+label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:600;
+}
+
+input,textarea,select{
+  width:100%;
+  border:1px solid #d8dfdc;
+  border-radius:12px;
+  padding:12px;
+  font-size:16px;
+  outline:none;
+  background:white;
+}
+
+input:focus,textarea:focus,select:focus{
+  border-color:#244c42;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:13px 18px;
+  font-size:16px;
+  font-weight:600;
+  width:100%;
+}
+
+.btn-primary{background:#244c42;color:white}
+.btn-secondary{background:#e9efed;color:#244c42}
+.btn-success{background:#18794e;color:white}
+.btn-danger{background:#b42318;color:white}
+
+.btn+.btn{margin-top:8px}
+
+.message{
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:14px;
+  display:none;
+}
+
+.message.show{display:block}
+.message.error{background:#fff0f0;color:#a61b1b}
+.message.success{background:#edf9f2;color:#17663f}
+
+.date-list{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:5px;
+}
+
+.date-item{
+  min-width:78px;
+  border:1px solid #d8dfdc;
+  background:white;
+  border-radius:14px;
+  padding:10px 7px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.date-item.active{
+  background:#244c42;
+  color:white;
+  border-color:#244c42;
+}
+
+.date-day{font-size:12px;opacity:.8}
+.date-number{font-size:20px;font-weight:700;margin:2px 0}
+
+.time-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.time-btn{
+  border:1px solid #d8dfdc;
+  background:white;
+  border-radius:12px;
+  padding:11px 5px;
+  font-size:15px;
+}
+
+.time-btn.active{
+  background:#244c42;
+  color:white;
+  border-color:#244c42;
+}
+
+.time-btn.disabled{
+  background:#f1f3f2;
+  color:#a0aaa6;
+  cursor:not-allowed;
+}
+
+.topbar{
+  display:flex;
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.topbar .btn{flex:1}
+
+.admin-nav{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin-bottom:16px;
+}
+
+.admin-nav button{
+  white-space:nowrap;
+  border:1px solid #d8dfdc;
+  background:white;
+  border-radius:12px;
+  padding:10px 14px;
+}
+
+.admin-nav button.active{
+  background:#244c42;
+  color:white;
+  border-color:#244c42;
+}
+
+.booking{
+  border:1px solid #e0e5e3;
+  border-radius:15px;
+  padding:14px;
+  margin-bottom:10px;
+}
+
+.booking-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.booking-name{
+  font-size:18px;
+  font-weight:700;
+}
+
+.status{
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.status-pending{background:#fff4d6;color:#805b00}
+.status-confirmed{background:#e8f7ef;color:#17663f}
+.status-rejected,.status-cancelled{background:#ffe9e9;color:#a61b1b}
+.status-done{background:#e9eefb;color:#34518f}
+
+.booking-info{
+  color:#68746f;
+  margin:8px 0;
+  line-height:1.8;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+
+.actions button{
+  border:0;
+  border-radius:10px;
+  padding:9px 6px;
+  font-weight:600;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.stat{
+  background:white;
+  border-radius:15px;
+  padding:14px 8px;
+  text-align:center;
+}
+
+.stat-number{
+  font-size:24px;
+  font-weight:700;
+  color:#244c42;
+}
+
+.stat-label{
+  font-size:12px;
+  color:#707b77;
+}
+
+.small{
+  font-size:13px;
+  color:#78837f;
+}
+
+.empty{
+  text-align:center;
+  color:#7a8581;
+  padding:25px 10px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #e5e9e7;
+  margin:18px 0;
+}
+
+.days-off{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+.day-off{
+  border:1px solid #d8dfdc;
+  background:white;
+  border-radius:10px;
+  padding:8px 10px;
+}
+
+.day-off.active{
+  background:#b42318;
+  color:white;
+  border-color:#b42318;
+}
+
+@media(max-width:500px){
+  .time-grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
 </head>
+
 <body>
 
 <div id="app">
-  <h2 style="text-align:center">هيثم للحجامة</h2>
-  <p style="text-align:center">جاري تشغيل التطبيق…</p>
+  <div class="container">
+    <div class="header">
+      <div class="logo">هـ</div>
+      <h1>هيثم للحجامة</h1>
+      <div class="subtitle">أبو سنان</div>
+    </div>
+
+    <div class="card">
+      <div style="text-align:center">
+        جارٍ تحميل التطبيق…
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -17,24 +345,1883 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyClhrm3BtsQhOOUe_Am9z69DkRAEwsweJ4",
-  authDomain: "haetham-80b2a.firebaseapp.com",
-  projectId: "haetham-80b2a",
-  storageBucket: "haetham-80b2a.firebasestorage.app",
-  messagingSenderId: "288982607003",
-  appId: "1:288982607003:web:841f87f604b80b5745d23e"
+
+const firebaseConfig={
+  apiKey:"AIzaSyClhrm3BtsQhOOUe_Am9z69DkRAEwsweJ4",
+  authDomain:"haetham-80b2a.firebaseapp.com",
+  projectId:"haetham-80b2a",
+  storageBucket:"haetham-80b2a.firebasestorage.app",
+  messagingSenderId:"288982607003",
+  appId:"1:288982607003:web:841f87f604b80b5745d23e",
+  measurementId:"G-SSQSPWN5EX"
 };
 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+const auth=firebase.auth();
+const db=firebase.firestore();
+const app=document.getElementById("app");
 
-document.getElementById("app").innerHTML = `
-  <h1 style="text-align:center">هيثم للحجامة</h1>
-  <p style="text-align:center">تم تشغيل Firebase بنجاح ✅</p>
-`;
+const S={
+  user:null,
+  view:"home",
+  tab:"bookings",
+  selectedDate:"",
+  selectedTime:"",
+  settings:{
+    name:"هيثم للحجامة",
+    area:"أبو سنان",
+    whatsapp:"",
+    start:"10:00",
+    end:"22:00",
+    slot:60,
+    capacity:2,
+    daysOff:[]
+  },
+  bookings:[],
+  availability:{}
+};
+
+
+/* =========================
+   أدوات
+========================= */
+
+function esc(v){
+  return String(v??"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function toEn(v){
+  return String(v??"")
+    .replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d))
+    .replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+}
+
+function waNum(p){
+  let d=toEn(p).replace(/\D/g,"");
+
+  if(d.startsWith("00")) d=d.slice(2);
+
+  if(/^0\d{8,9}$/.test(d)){
+    d="972"+d.slice(1);
+  }
+
+  if(/^9720\d{8,9}$/.test(d)){
+    d="972"+d.slice(4);
+  }
+
+  return d;
+}
+
+function waLink(phone,text=""){
+  let n=waNum(phone);
+
+  return "https://wa.me/"+n+
+    (text?"?text="+encodeURIComponent(text):"");
+}
+
+function today(){
+  const d=new Date();
+
+  return d.getFullYear()+"-"+
+    String(d.getMonth()+1).padStart(2,"0")+"-"+
+    String(d.getDate()).padStart(2,"0");
+}
+
+function addDays(date,n){
+  const d=new Date(date+"T00:00:00");
+  d.setDate(d.getDate()+n);
+
+  return d.getFullYear()+"-"+
+    String(d.getMonth()+1).padStart(2,"0")+"-"+
+    String(d.getDate()).padStart(2,"0");
+}
+
+function dateObj(date){
+  return new Date(date+"T00:00:00");
+}
+
+function formatDate(date){
+  return new Intl.DateTimeFormat("ar-IL",{
+    weekday:"long",
+    day:"numeric",
+    month:"long"
+  }).format(dateObj(date));
+}
+
+function shortDay(date){
+  return new Intl.DateTimeFormat("ar-IL",{
+    weekday:"short"
+  }).format(dateObj(date));
+}
+
+function monthName(date){
+  return new Intl.DateTimeFormat("ar-IL",{
+    month:"short"
+  }).format(dateObj(date));
+}
+
+function minutes(t){
+  const x=t.split(":").map(Number);
+  return x[0]*60+x[1];
+}
+
+function timeString(m){
+  return String(Math.floor(m/60)).padStart(2,"0")+":"+
+         String(m%60).padStart(2,"0");
+}
+
+function times(){
+  const result=[];
+  const start=minutes(S.settings.start||"10:00");
+  const end=minutes(S.settings.end||"22:00");
+  const slot=Number(S.settings.slot||60);
+
+  for(let x=start;x<end;x+=slot){
+    result.push(timeString(x));
+  }
+
+  return result;
+}
+
+function isDayOff(date){
+  return (S.settings.daysOff||[]).includes(date);
+}
+
+function taken(date,time){
+  return Number(S.availability[date+"_"+time]||0);
+}
+
+function full(date,time){
+  return taken(date,time)>=Number(S.settings.capacity||1);
+}
+
+function message(text,type="success"){
+  const old=document.querySelector(".message");
+  if(old) old.remove();
+
+  const div=document.createElement("div");
+
+  div.className="message show "+type;
+  div.textContent=text;
+
+  document.querySelector(".container")?.prepend(div);
+
+  setTimeout(()=>div.remove(),4000);
+}
+
+
+/* =========================
+   الاستماع إلى الإعدادات
+========================= */
+
+db.collection("settings")
+.doc("main")
+.onSnapshot(doc=>{
+
+  if(doc.exists){
+
+    S.settings={
+      ...S.settings,
+      ...doc.data()
+    };
+
+  }
+
+  if(!S.selectedDate){
+    S.selectedDate=today();
+  }
+
+  render();
+
+},error=>{
+
+  console.error(error);
+
+  render();
+
+});
+
+
+/* =========================
+   التوفر
+========================= */
+
+db.collection("settings")
+.doc("availability")
+.onSnapshot(doc=>{
+
+  if(doc.exists){
+
+    const data=doc.data();
+
+    S.availability=data.taken||{};
+
+  }
+
+  if(S.view==="home"){
+    renderHome();
+  }
+
+});
+
+
+/* =========================
+   الحجوزات
+========================= */
+
+function listenBookings(){
+
+  if(!S.user) return;
+
+  db.collection("bookings")
+  .onSnapshot(snapshot=>{
+
+    S.bookings=snapshot.docs.map(d=>({
+      id:d.id,
+      ...d.data()
+    }));
+
+    S.bookings.sort((a,b)=>{
+
+      return (`${a.date} ${a.time}`)
+        .localeCompare(`${b.date} ${b.time}`);
+
+    });
+
+    syncAvailability();
+
+    if(S.view==="admin"){
+      renderAdmin();
+    }
+
+  },error=>{
+
+    console.error(error);
+
+  });
+
+}
+
+
+async function syncAvailability(){
+
+  if(!S.user) return;
+
+  const counts={};
+
+  S.bookings.forEach(b=>{
+
+    if(
+      b.status==="confirmed" ||
+      b.status==="done"
+    ){
+
+      const key=b.date+"_"+b.time;
+
+      counts[key]=(counts[key]||0)+1;
+
+    }
+
+  });
+
+  S.availability=counts;
+
+  try{
+
+    await db.collection("settings")
+      .doc("availability")
+      .set({
+        taken:counts,
+        updatedAt:Date.now()
+      });
+
+  }catch(e){
+
+    console.error(e);
+
+  }
+
+}
+
+
+/* =========================
+   الهيدر
+========================= */
+
+function header(){
+
+  return `
+    <div class="header">
+
+      <div class="logo">هـ</div>
+
+      <h1>${esc(S.settings.name)}</h1>
+
+      <div class="subtitle">
+        ${esc(S.settings.area)}
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+/* =========================
+   الصفحة الرئيسية
+========================= */
+
+function renderHome(){
+
+  if(!S.selectedDate){
+    S.selectedDate=today();
+  }
+
+  const dates=[];
+
+  for(let i=0;i<21;i++){
+    dates.push(addDays(today(),i));
+  }
+
+  app.innerHTML=`
+
+    <div class="container">
+
+      ${header()}
+
+      <div class="card">
+
+        <h2>حجز موعد</h2>
+
+        <div class="small" style="margin-bottom:12px">
+          اختر اليوم
+        </div>
+
+        <div class="date-list">
+
+          ${dates.map(d=>`
+
+            <div
+              class="date-item ${S.selectedDate===d?"active":""}"
+              onclick="selectDate('${d}')"
+            >
+
+              <div class="date-day">
+                ${esc(shortDay(d))}
+              </div>
+
+              <div class="date-number">
+                ${dateObj(d).getDate()}
+              </div>
+
+              <div class="date-day">
+                ${esc(monthName(d))}
+              </div>
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h2>اختر الوقت</h2>
+
+        ${
+          isDayOff(S.selectedDate)
+
+          ?
+
+          `<div class="empty">
+            هذا اليوم غير متاح للحجز
+          </div>`
+
+          :
+
+          `
+          <div class="time-grid">
+
+            ${times().map(t=>{
+
+              const isFull=full(
+                S.selectedDate,
+                t
+              );
+
+              return `
+
+                <button
+                  class="time-btn
+                  ${S.selectedTime===t?"active":""}
+                  ${isFull?"disabled":""}"
+                  ${isFull?"disabled":""}
+                  onclick="selectTime('${t}')"
+                >
+
+                  ${t}
+
+                  ${
+                    isFull
+                    ? `<div style="font-size:11px">ممتلئ</div>`
+                    : ""
+                  }
+
+                </button>
+
+              `;
+
+            }).join("")}
+
+          </div>
+          `
+        }
+
+      </div>
+
+
+      ${
+        S.selectedTime
+
+        ?
+
+        `
+
+        <div class="card">
+
+          <h2>بيانات الحجز</h2>
+
+          <div class="small" style="margin-bottom:15px">
+
+            ${esc(formatDate(S.selectedDate))}
+            —
+            ${esc(S.selectedTime)}
+
+          </div>
+
+
+          <div class="field">
+
+            <label>الاسم</label>
+
+            <input
+              id="customerName"
+              maxlength="80"
+              placeholder="اكتب اسمك"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>رقم الهاتف</label>
+
+            <input
+              id="customerPhone"
+              type="tel"
+              inputmode="tel"
+              maxlength="20"
+              placeholder="05XXXXXXXX"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>ملاحظات</label>
+
+            <textarea
+              id="customerNotes"
+              maxlength="300"
+              placeholder="أي ملاحظة"
+            ></textarea>
+
+          </div>
+
+
+          <button
+            class="btn btn-primary"
+            onclick="createBooking()"
+          >
+            إرسال طلب الحجز
+          </button>
+
+        </div>
+
+        `
+
+        :
+
+        ""
+      }
+
+
+      <div class="card">
+
+        <h2>التواصل</h2>
+
+        <p class="small">
+          للحجز أو الاستفسار يمكنك التواصل معنا عبر واتساب.
+        </p>
+
+        ${
+          S.settings.whatsapp
+          ?
+
+          `
+          <a
+            href="${waLink(S.settings.whatsapp)}"
+            target="_blank"
+            style="text-decoration:none"
+          >
+
+            <button class="btn btn-success">
+              التواصل عبر واتساب
+            </button>
+
+          </a>
+          `
+
+          :
+
+          ""
+        }
+
+      </div>
+
+
+      <div style="text-align:center">
+
+        <button
+          class="btn btn-secondary"
+          style="width:auto"
+          onclick="showLogin()"
+        >
+          دخول الإدارة
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+function selectDate(date){
+
+  S.selectedDate=date;
+  S.selectedTime="";
+
+  renderHome();
+
+}
+
+
+function selectTime(time){
+
+  if(full(S.selectedDate,time)){
+
+    message(
+      "هذا الموعد ممتلئ",
+      "error"
+    );
+
+    return;
+  }
+
+  S.selectedTime=time;
+
+  renderHome();
+
+}
+
+
+/* =========================
+   إنشاء حجز
+========================= */
+
+async function createBooking(){
+
+  const name=document
+    .getElementById("customerName")
+    ?.value.trim();
+
+  const phone=document
+    .getElementById("customerPhone")
+    ?.value.trim();
+
+  const notes=document
+    .getElementById("customerNotes")
+    ?.value.trim()||"";
+
+
+  if(!name || name.length<2){
+
+    message(
+      "يرجى كتابة الاسم",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(!phone || phone.length<6){
+
+    message(
+      "يرجى كتابة رقم الهاتف",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(full(S.selectedDate,S.selectedTime)){
+
+    message(
+      "هذا الموعد أصبح ممتلئًا",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    await db.collection("bookings").add({
+
+      name:name,
+      phone:phone,
+      date:S.selectedDate,
+      time:S.selectedTime,
+      notes:notes,
+      status:"pending",
+      createdAt:Date.now()
+
+    });
+
+
+    S.selectedTime="";
+
+    renderHome();
+
+    message(
+      "تم إرسال طلب الحجز بنجاح. سيتم تأكيد الموعد من الإدارة.",
+      "success"
+    );
+
+
+  }catch(e){
+
+    console.error(e);
+
+    message(
+      "حدث خطأ أثناء إرسال الحجز",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   تسجيل الدخول
+========================= */
+
+function showLogin(){
+
+  S.view="login";
+
+  renderLogin();
+
+}
+
+
+function renderLogin(){
+
+  app.innerHTML=`
+
+    <div class="container">
+
+      ${header()}
+
+      <div class="card">
+
+        <h2>دخول الإدارة</h2>
+
+        <div class="field">
+
+          <label>البريد الإلكتروني</label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="البريد الإلكتروني"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>كلمة المرور</label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="كلمة المرور"
+          >
+
+        </div>
+
+
+        <button
+          class="btn btn-primary"
+          onclick="login()"
+        >
+          تسجيل الدخول
+        </button>
+
+
+        <button
+          class="btn btn-secondary"
+          onclick="goHome()"
+        >
+          العودة
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+async function login(){
+
+  const email=document.getElementById("email")?.value.trim();
+  const password=document.getElementById("password")?.value;
+
+  if(!email || !password){
+
+    message(
+      "أدخل البريد الإلكتروني وكلمة المرور",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    await auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    message(
+      "بيانات الدخول غير صحيحة",
+      "error"
+    );
+
+  }
+
+}
+
+
+async function logout(){
+
+  await auth.signOut();
+
+}
+
+
+function goHome(){
+
+  S.view="home";
+  S.selectedTime="";
+
+  renderHome();
+
+}
+
+
+/* =========================
+   لوحة الإدارة
+========================= */
+
+function renderAdmin(){
+
+  if(!S.user){
+
+    renderLogin();
+
+    return;
+  }
+
+  const pending=S.bookings.filter(
+    b=>b.status==="pending"
+  ).length;
+
+  const confirmed=S.bookings.filter(
+    b=>b.status==="confirmed"
+  ).length;
+
+  const done=S.bookings.filter(
+    b=>b.status==="done"
+  ).length;
+
+
+  app.innerHTML=`
+
+    <div class="container">
+
+      ${header()}
+
+
+      <div class="topbar">
+
+        <button
+          class="btn btn-secondary"
+          onclick="goHome()"
+        >
+          صفحة الحجز
+        </button>
+
+        <button
+          class="btn btn-danger"
+          onclick="logout()"
+        >
+          خروج
+        </button>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <div class="stat-number">
+            ${pending}
+          </div>
+
+          <div class="stat-label">
+            انتظار
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-number">
+            ${confirmed}
+          </div>
+
+          <div class="stat-label">
+            مؤكدة
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-number">
+            ${done}
+          </div>
+
+          <div class="stat-label">
+            مكتملة
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="admin-nav">
+
+        <button
+          class="${S.tab==="bookings"?"active":""}"
+          onclick="adminTab('bookings')"
+        >
+          الحجوزات
+        </button>
+
+        <button
+          class="${S.tab==="manual"?"active":""}"
+          onclick="adminTab('manual')"
+        >
+          حجز يدوي
+        </button>
+
+        <button
+          class="${S.tab==="settings"?"active":""}"
+          onclick="adminTab('settings')"
+        >
+          الإعدادات
+        </button>
+
+      </div>
+
+
+      ${
+        S.tab==="bookings"
+        ?renderBookings()
+        :""
+      }
+
+
+      ${
+        S.tab==="manual"
+        ?renderManual()
+        :""
+      }
+
+
+      ${
+        S.tab==="settings"
+        ?renderSettings()
+        :""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function adminTab(tab){
+
+  S.tab=tab;
+
+  renderAdmin();
+
+}
+
+
+/* =========================
+   الحجوزات
+========================= */
+
+function renderBookings(){
+
+  const bookings=[...S.bookings];
+
+  if(!bookings.length){
+
+    return `
+
+      <div class="card">
+
+        <div class="empty">
+          لا توجد حجوزات حاليًا
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  return `
+
+    <div class="card">
+
+      <h2>الحجوزات</h2>
+
+      ${bookings.map(renderBooking).join("")}
+
+    </div>
+
+  `;
+
+}
+
+
+function renderBooking(b){
+
+  const statusNames={
+    pending:"بانتظار التأكيد",
+    confirmed:"مؤكد",
+    rejected:"مرفوض",
+    cancelled:"ملغي",
+    done:"مكتمل"
+  };
+
+
+  return `
+
+    <div class="booking">
+
+      <div class="booking-head">
+
+        <div class="booking-name">
+          ${esc(b.name)}
+        </div>
+
+        <div class="status status-${esc(b.status)}">
+          ${esc(statusNames[b.status]||b.status)}
+        </div>
+
+      </div>
+
+
+      <div class="booking-info">
+
+        📅 ${esc(formatDate(b.date))}
+
+        <br>
+
+        🕐 ${esc(b.time)}
+
+        <br>
+
+        📞 ${esc(b.phone)}
+
+        ${
+          b.notes
+          ?
+          `<br>📝 ${esc(b.notes)}`
+          :
+          ""
+        }
+
+      </div>
+
+
+      <div class="actions">
+
+        ${
+          b.status==="pending"
+
+          ?
+
+          `
+
+          <button
+            class="btn-success"
+            onclick="changeStatus('${b.id}','confirmed')"
+          >
+            تأكيد
+          </button>
+
+          <button
+            class="btn-danger"
+            onclick="changeStatus('${b.id}','rejected')"
+          >
+            رفض
+          </button>
+
+          `
+
+          :
+
+          ""
+        }
+
+
+        ${
+          b.status==="confirmed"
+
+          ?
+
+          `
+
+          <button
+            class="btn-success"
+            onclick="changeStatus('${b.id}','done')"
+          >
+            تم الحضور
+          </button>
+
+          <button
+            class="btn-danger"
+            onclick="changeStatus('${b.id}','cancelled')"
+          >
+            إلغاء
+          </button>
+
+          <button
+            class="btn-secondary"
+            onclick="openWA('${b.phone}','${esc(b.name)}')"
+          >
+            واتساب
+          </button>
+
+          <button
+            class="btn-secondary"
+            onclick="googleCalendar('${b.id}')"
+          >
+            Google Calendar
+          </button>
+
+          `
+
+          :
+
+          ""
+        }
+
+
+        ${
+          b.status==="done"
+
+          ?
+
+          `
+
+          <button
+            class="btn-secondary"
+            onclick="changeStatus('${b.id}','confirmed')"
+          >
+            إعادة تأكيد
+          </button>
+
+          `
+
+          :
+
+          ""
+        }
+
+
+        ${
+          b.status==="rejected" ||
+          b.status==="cancelled"
+
+          ?
+
+          `
+
+          <button
+            class="btn-danger"
+            onclick="deleteBooking('${b.id}')"
+          >
+            حذف
+          </button>
+
+          `
+
+          :
+
+          ""
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+async function changeStatus(id,status){
+
+  try{
+
+    await db.collection("bookings")
+      .doc(id)
+      .update({
+        status:status,
+        updatedAt:Date.now()
+      });
+
+  }catch(e){
+
+    console.error(e);
+
+    message(
+      "تعذر تحديث الحجز",
+      "error"
+    );
+
+  }
+
+}
+
+
+async function deleteBooking(id){
+
+  if(!confirm("هل تريد حذف الحجز؟")) return;
+
+  try{
+
+    await db.collection("bookings")
+      .doc(id)
+      .delete();
+
+  }catch(e){
+
+    console.error(e);
+
+    message(
+      "تعذر حذف الحجز",
+      "error"
+    );
+
+  }
+
+}
+
+
+function openWA(phone,name){
+
+  const text=
+    "مرحباً "+name+
+    "، معك هيثم للحجامة.";
+
+  window.open(
+    waLink(phone,text),
+    "_blank"
+  );
+
+}
+
+
+/* =========================
+   الحجز اليدوي
+========================= */
+
+function renderManual(){
+
+  const date=S.selectedDate||today();
+
+  return `
+
+    <div class="card">
+
+      <h2>حجز يدوي</h2>
+
+      <div class="field">
+
+        <label>اسم العميل</label>
+
+        <input
+          id="manualName"
+          placeholder="اسم العميل"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>رقم الهاتف</label>
+
+        <input
+          id="manualPhone"
+          type="tel"
+          placeholder="05XXXXXXXX"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>التاريخ</label>
+
+        <input
+          id="manualDate"
+          type="date"
+          value="${date}"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>الساعة</label>
+
+        <select id="manualTime">
+
+          ${times().map(t=>`
+
+            <option value="${t}">
+              ${t}
+            </option>
+
+          `).join("")}
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>ملاحظات</label>
+
+        <textarea id="manualNotes"></textarea>
+
+      </div>
+
+
+      <button
+        class="btn btn-primary"
+        onclick="createManualBooking()"
+      >
+        حفظ الحجز
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+async function createManualBooking(){
+
+  const name=document
+    .getElementById("manualName")
+    ?.value.trim();
+
+  const phone=document
+    .getElementById("manualPhone")
+    ?.value.trim();
+
+  const date=document
+    .getElementById("manualDate")
+    ?.value;
+
+  const time=document
+    .getElementById("manualTime")
+    ?.value;
+
+  const notes=document
+    .getElementById("manualNotes")
+    ?.value.trim()||"";
+
+
+  if(!name || !phone || !date || !time){
+
+    message(
+      "أكمل بيانات الحجز",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(full(date,time)){
+
+    message(
+      "هذا الموعد ممتلئ",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    await db.collection("bookings").add({
+
+      name:name,
+      phone:phone,
+      date:date,
+      time:time,
+      notes:notes,
+      status:"confirmed",
+      createdAt:Date.now()
+
+    });
+
+
+    message(
+      "تم حفظ الحجز",
+      "success"
+    );
+
+    S.tab="bookings";
+
+    renderAdmin();
+
+
+  }catch(e){
+
+    console.error(e);
+
+    message(
+      "تعذر حفظ الحجز",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   الإعدادات
+========================= */
+
+function renderSettings(){
+
+  const s=S.settings;
+
+  return `
+
+    <div class="card">
+
+      <h2>إعدادات المركز</h2>
+
+
+      <div class="field">
+
+        <label>اسم المركز</label>
+
+        <input
+          id="setName"
+          value="${esc(s.name)}"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>المنطقة</label>
+
+        <input
+          id="setArea"
+          value="${esc(s.area)}"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>رقم واتساب</label>
+
+        <input
+          id="setWhatsApp"
+          type="tel"
+          value="${esc(s.whatsapp)}"
+          placeholder="05XXXXXXXX"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>بداية العمل</label>
+
+        <input
+          id="setStart"
+          type="time"
+          value="${esc(s.start)}"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>نهاية العمل</label>
+
+        <input
+          id="setEnd"
+          type="time"
+          value="${esc(s.end)}"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>مدة الموعد بالدقائق</label>
+
+        <select id="setSlot">
+
+          ${[30,45,60,90,120].map(x=>`
+
+            <option
+              value="${x}"
+              ${Number(s.slot)===x?"selected":""}
+            >
+              ${x} دقيقة
+            </option>
+
+          `).join("")}
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>عدد الأشخاص في نفس الموعد</label>
+
+        <select id="setCapacity">
+
+          ${[1,2,3,4].map(x=>`
+
+            <option
+              value="${x}"
+              ${Number(s.capacity)===x?"selected":""}
+            >
+              ${x}
+            </option>
+
+          `).join("")}
+
+        </select>
+
+      </div>
+
+
+      <button
+        class="btn btn-primary"
+        onclick="saveSettings()"
+      >
+        حفظ الإعدادات
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>أيام الإجازة</h2>
+
+      <div class="small" style="margin-bottom:12px">
+        اختر تاريخًا لإضافته أو إزالته من أيام عدم الحجز.
+      </div>
+
+      <div class="field">
+
+        <input
+          id="dayOffDate"
+          type="date"
+        >
+
+      </div>
+
+      <button
+        class="btn btn-secondary"
+        onclick="toggleDayOff()"
+      >
+        إضافة / إزالة اليوم
+      </button>
+
+
+      <hr>
+
+      ${
+        (s.daysOff||[]).length
+
+        ?
+
+        s.daysOff.map(d=>`
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:9px 0;
+            border-bottom:1px solid #eee;
+          ">
+
+            <span>
+              ${esc(formatDate(d))}
+            </span>
+
+            <button
+              class="btn-danger"
+              style="width:auto;padding:7px 12px"
+              onclick="removeDayOff('${d}')"
+            >
+              حذف
+            </button>
+
+          </div>
+
+        `).join("")
+
+        :
+
+        `<div class="empty">
+          لا توجد أيام إجازة
+        </div>`
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+async function saveSettings(){
+
+  const data={
+
+    name:document.getElementById("setName").value.trim(),
+
+    area:document.getElementById("setArea").value.trim(),
+
+    whatsapp:document.getElementById("setWhatsApp").value.trim(),
+
+    start:document.getElementById("setStart").value,
+
+    end:document.getElementById("setEnd").value,
+
+    slot:Number(document.getElementById("setSlot").value),
+
+    capacity:Number(document.getElementById("setCapacity").value),
+
+    daysOff:S.settings.daysOff||[]
+
+  };
+
+
+  try{
+
+    await db.collection("settings")
+      .doc("main")
+      .set(data);
+
+    message(
+      "تم حفظ الإعدادات",
+      "success"
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    message(
+      "تعذر حفظ الإعدادات",
+      "error"
+    );
+
+  }
+
+}
+
+
+async function toggleDayOff(){
+
+  const date=document
+    .getElementById("dayOffDate")
+    ?.value;
+
+  if(!date){
+
+    message(
+      "اختر التاريخ أولًا",
+      "error"
+    );
+
+    return;
+  }
+
+
+  let days=[...(S.settings.daysOff||[])];
+
+  if(days.includes(date)){
+
+    days=days.filter(d=>d!==date);
+
+  }else{
+
+    days.push(date);
+
+  }
+
+
+  try{
+
+    await db.collection("settings")
+      .doc("main")
+      .update({
+        daysOff:days
+      });
+
+  }catch(e){
+
+    console.error(e);
+
+    message(
+      "تعذر تحديث أيام الإجازة",
+      "error"
+    );
+
+  }
+
+}
+
+
+async function removeDayOff(date){
+
+  let days=[...(S.settings.daysOff||[])];
+
+  days=days.filter(d=>d!==date);
+
+  try{
+
+    await db.collection("settings")
+      .doc("main")
+      .update({
+        daysOff:days
+      });
+
+  }catch(e){
+
+    console.error(e);
+
+  }
+
+}
+
+
+/* =========================
+   Google Calendar
+========================= */
+
+function googleCalendar(id){
+
+  const b=S.bookings.find(x=>x.id===id);
+
+  if(!b) return;
+
+
+  const start=b.date.replace(/-/g,"")+
+    "T"+
+    b.time.replace(":","")+
+    "00";
+
+
+  const endDate=new Date(
+    b.date+"T"+b.time+":00"
+  );
+
+  endDate.setMinutes(
+    endDate.getMinutes()+
+    Number(S.settings.slot||60)
+  );
+
+
+  const end=
+    endDate.getFullYear()+
+    String(endDate.getMonth()+1).padStart(2,"0")+
+    String(endDate.getDate()).padStart(2,"0")+
+    "T"+
+    String(endDate.getHours()).padStart(2,"0")+
+    String(endDate.getMinutes()).padStart(2,"0")+
+    "00";
+
+
+  const title=encodeURIComponent(
+    "حجامة - "+b.name
+  );
+
+  const details=encodeURIComponent(
+    "هاتف العميل: "+b.phone+
+    "\nملاحظات: "+(b.notes||"")
+  );
+
+
+  const url=
+    "https://calendar.google.com/calendar/render"+
+    "?action=TEMPLATE"+
+    "&text="+title+
+    "&dates="+start+"/"+end+
+    "&details="+details;
+
+
+  window.open(url,"_blank");
+
+}
+
+
+/* =========================
+   تحديد الصفحة
+========================= */
+
+function render(){
+
+  if(S.view==="login"){
+
+    renderLogin();
+    return;
+
+  }
+
+  if(S.view==="admin"){
+
+    renderAdmin();
+    return;
+
+  }
+
+  renderHome();
+
+}
+
+
+/* =========================
+   حالة تسجيل الدخول
+========================= */
+
+auth.onAuthStateChanged(user=>{
+
+  S.user=user||null;
+
+  if(user){
+
+    S.view="admin";
+
+    listenBookings();
+
+    renderAdmin();
+
+  }else{
+
+    S.view="home";
+
+    renderHome();
+
+  }
+
+});
+
 </script>
 
 </body>
