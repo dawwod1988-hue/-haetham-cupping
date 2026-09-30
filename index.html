@@ -1684,11 +1684,11 @@ async function createBooking(){
     );
 
 
-    await db
-      .collection("bookings")
-      .add(
-        bookingData
-      );
+    const testRef = await db
+  .collection("bookings")
+  .add(bookingData);
+
+console.log("BOOKING SAVED:", testRef.id);
 
 
     console.log(
