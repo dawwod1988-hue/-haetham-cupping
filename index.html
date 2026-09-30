@@ -191,7 +191,6 @@
 
 <div class="container">
 
-
   <div class="header">
 
     <h1 id="centerName">
@@ -315,7 +314,6 @@
     سيتم تأكيد الموعد بعد مراجعة طلب الحجز.
   </p>
 
-
 </div>
 
 
@@ -369,6 +367,20 @@ firebase.initializeApp(
 
 const db =
   firebase.firestore();
+
+
+/*
+  تحسين اتصال Firestore
+  مع iPhone / Safari
+*/
+
+db.settings({
+
+  experimentalForceLongPolling: true,
+
+  useFetchStreams: false
+
+});
 
 
 const auth =
@@ -1193,17 +1205,6 @@ function renderHome(){
 
 async function createBooking(){
 
-  /*
-    اختبار مهم جدًا:
-    إذا ظهر هذا التنبيه، نعرف أن
-    الكود الجديد وصل إلى الهاتف.
-  */
-
-  alert(
-    "تم تشغيل نسخة الكود الجديدة"
-  );
-
-
   message(
     "جاري إرسال الحجز...",
     "info"
@@ -1255,7 +1256,6 @@ async function createBooking(){
     notesEl
       ? notesEl.value.trim()
       : "";
-
 
 
   if(!name){
@@ -1405,46 +1405,11 @@ async function createBooking(){
     );
 
 
-    const firebaseRequest =
-
-      db
-        .collection("bookings")
-        .add(
-          bookingData
-        );
-
-
-    const timeout =
-
-      new Promise(
-        function(_,reject){
-
-          setTimeout(
-            function(){
-
-              reject(
-
-                new Error(
-                  "انتهت مهلة الاتصال بـ Firebase بعد 10 ثوانٍ"
-                )
-
-              );
-
-            },
-            10000
-          );
-
-        }
+    await db
+      .collection("bookings")
+      .add(
+        bookingData
       );
-
-
-    await Promise.race([
-
-      firebaseRequest,
-
-      timeout
-
-    ]);
 
 
     console.log(
@@ -1525,7 +1490,19 @@ db
       }
 
 
-      renderHome();
+      /*
+        لا نعيد بناء الصفحة أثناء
+        إدخال بيانات الحجز إذا كان
+        المستخدم قد اختار وقتًا.
+      */
+
+      if(
+        !S.selectedTime
+      ){
+
+        renderHome();
+
+      }
 
     },
 
