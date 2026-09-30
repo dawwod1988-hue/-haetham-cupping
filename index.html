@@ -865,12 +865,15 @@ function renderHome(){
           </div>
 
           <button
-  class="btn btn-primary"
-  onclick="alert('الزر يعمل')"
-  type="button"
->
-  إرسال طلب الحجز
-</button>
+            class="btn btn-primary"
+            onclick="createBooking()"
+            type="button"
+          >
+
+            إرسال طلب الحجز
+
+          </button>
+
         </div>
 
         `
@@ -993,6 +996,12 @@ function selectTime(time){
 ========================= */
 
 async function createBooking(){
+
+  message(
+    "جاري إرسال الحجز...",
+    "info"
+  );
+
 
   const nameEl=
     document.getElementById("customerName");
@@ -2416,12 +2425,6 @@ db.collection("settings")
       }
 
 
-      /*
-       لا نعيد رسم الصفحة إذا كان
-       المستخدم قد اختار وقتًا وبدأ
-       بإدخال بيانات الحجز.
-      */
-
       if(
         S.view==="home" &&
         !S.selectedTime
@@ -2465,11 +2468,6 @@ db.collection("settings")
       S.availability=
         doc.exists ? doc.data() : {};
 
-
-      /*
-       لا نمسح بيانات العميل
-       أثناء تعبئة نموذج الحجز.
-      */
 
       if(
         S.view==="home" &&
